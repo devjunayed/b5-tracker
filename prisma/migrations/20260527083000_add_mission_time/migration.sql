@@ -1,0 +1,1 @@
+ALTER TABLE "missions" ADD COLUMN "timeMinutes" INTEGER NOT NULL DEFAULT 0;
