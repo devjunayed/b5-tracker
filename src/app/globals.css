@@ -18,7 +18,7 @@ html, body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Geist', 'Inter', system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -125,8 +125,8 @@ body {
   margin-bottom: 10px;
 }
 
-.overall-label { font-size: 0.8125rem; color: var(--muted); }
-.overall-pct   { font-size: 1.375rem; font-weight: 600; color: var(--accent); }
+.overall-label { font-size: 0.9rem; color: var(--muted); }
+.overall-pct   { font-size: 1.5rem; font-weight: 600; color: var(--accent); }
 
 .stat-row {
   display: flex;
@@ -137,7 +137,7 @@ body {
 
 .stat-item { display: flex; flex-direction: column; gap: 2px; }
 .stat-num  { font-size: 1.125rem; font-weight: 600; color: var(--text); }
-.stat-lbl  { font-size: 0.75rem; color: var(--muted); }
+.stat-lbl  { font-size: 0.82rem; color: var(--muted); }
 
 /* ── Stats Grid (Quick Cards) ───────────────────────────────────────────── */
 .stats-grid {
@@ -174,13 +174,13 @@ body {
 }
 
 .stat-card-value {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 600;
   color: var(--accent);
 }
 
 .stat-card-label {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -203,13 +203,13 @@ body {
 }
 
 .content-header h2 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--text);
 }
 
 .content-count {
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   color: var(--muted);
   background: var(--surface);
   padding: 4px 12px;
@@ -282,7 +282,7 @@ body {
 }
 
 .mission-title {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--text);
   white-space: nowrap;
@@ -301,7 +301,7 @@ body {
 .mini-progress { width: 72px; }
 
 .badge {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   color: var(--muted);
   background: var(--surface2);
   border: 1px solid var(--border);
@@ -312,7 +312,7 @@ body {
 
 .time-pill,
 .module-duration {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   color: var(--muted);
   background: var(--bg);
   border: 1px solid var(--border);
@@ -359,7 +359,7 @@ body {
 }
 
 .module-name {
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   color: var(--text);
   transition: color 0.15s;
 }
@@ -370,7 +370,7 @@ body {
 }
 
 .empty-hint {
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   color: var(--muted);
   padding: 0.75rem 1.25rem;
   font-style: italic;
@@ -381,7 +381,7 @@ body {
   width: 100%;
   text-align: left;
   padding: 0.6rem 1.25rem;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   color: var(--muted);
   background: none;
   border: none;
@@ -394,7 +394,7 @@ body {
 .add-mission-btn {
   width: 100%;
   padding: 0.75rem;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   color: var(--muted);
   background: var(--surface);
   border: 1px dashed var(--border);
@@ -415,7 +415,7 @@ body {
 .add-input {
   flex: 1;
   padding: 7px 10px;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -437,7 +437,7 @@ body {
 
 .btn-primary {
   padding: 7px 14px;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   background: var(--accent);
   color: #021a0c;
   border: none;
@@ -451,7 +451,7 @@ body {
 
 .btn-ghost {
   padding: 7px 12px;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   background: none;
   color: var(--muted);
   border: 1px solid var(--border);
@@ -463,7 +463,7 @@ body {
 
 .btn-danger {
   padding: 7px 14px;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   background: var(--danger);
   color: #fff;
   border: none;
@@ -533,7 +533,7 @@ body {
   justify-content: center;
   height: 60vh;
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   gap: 10px;
 }
 
@@ -554,7 +554,7 @@ body {
   color: #f88;
   border-radius: var(--radius);
   padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   margin: 0 1.25rem 1rem;
   display: flex;
   justify-content: space-between;

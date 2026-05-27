@@ -19,7 +19,7 @@ interface Props {
 export function MissionCard({
   mission, stats, onAddModule, onToggleModule, onDeleteModule, onDeleteMission,
 }: Props) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [adding, setAdding] = useState(false);
   const [hovering, setHovering] = useState(false);
   const complete = stats.done === stats.total && stats.total > 0;
