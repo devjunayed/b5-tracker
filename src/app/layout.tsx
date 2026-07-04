@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Module Tracker — Batch 5',
-  description: 'Track your Batch 5 course progress',
+  title: 'Course Dashboard - Batch 5',
+  description: 'Track all course, mission, and module progress',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

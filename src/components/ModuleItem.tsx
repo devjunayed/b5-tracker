@@ -31,6 +31,17 @@ export function ModuleItem({ mod, missionId, onToggle, onDelete }: Props) {
           {mod.name}
         </span>
       </label>
+      {mod.link && (
+        <a
+          className="module-link"
+          href={mod.link}
+          target="_blank"
+          rel="noreferrer"
+          onClick={e => e.stopPropagation()}
+        >
+          Open
+        </a>
+      )}
       <span className="module-duration">{formatMinutes(mod.durationMinutes)}</span>
       <button
         className="delete-btn"

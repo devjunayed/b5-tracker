@@ -4,13 +4,14 @@ import { useState, useRef, useEffect } from 'react';
 import { parseTimeInput } from '@/lib/time';
 
 interface Props {
-  onSubmit: (name: string, durationMinutes: number) => Promise<void>;
+  onSubmit: (name: string, durationMinutes: number, link?: string) => Promise<void>;
   onCancel: () => void;
 }
 
 export function AddModuleForm({ onSubmit, onCancel }: Props) {
   const [name, setName] = useState('');
   const [duration, setDuration] = useState('');
+  const [link, setLink] = useState('');
   const [durationError, setDurationError] = useState(false);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,9 +30,10 @@ export function AddModuleForm({ onSubmit, onCancel }: Props) {
 
     setLoading(true);
     try {
-      await onSubmit(trimmedName, durationMinutes);
+      await onSubmit(trimmedName, durationMinutes, link.trim() || undefined);
       setName('');
       setDuration('');
+      setLink('');
     } finally {
       setLoading(false);
     }
@@ -58,6 +60,18 @@ export function AddModuleForm({ onSubmit, onCancel }: Props) {
         onChange={e => { setDuration(e.target.value); setDurationError(false); }}
         placeholder="1h 2m"
         className={`add-input duration-input ${durationError ? 'error' : ''}`}
+        disabled={loading}
+        onKeyDown={e => {
+          if (e.key === 'Enter') handleSubmit();
+          if (e.key === 'Escape') onCancel();
+        }}
+      />
+      <input
+        type="url"
+        value={link}
+        onChange={e => setLink(e.target.value)}
+        placeholder="Optional link"
+        className="add-input link-input"
         disabled={loading}
         onKeyDown={e => {
           if (e.key === 'Enter') handleSubmit();

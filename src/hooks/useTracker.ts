@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import type { Mission, MissionStats, TimeStats } from '@/types';
+import type { Course, Mission, MissionStats, TimeStats } from '@/types';
 
 async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
   const res = await fetch(url, {
@@ -15,15 +15,19 @@ async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export function useTracker() {
-  const [missions, setMissions] = useState<Mission[]>([]);
-  const [loading, setLoading]   = useState(true);
-  const [error, setError]       = useState<string | null>(null);
+function getModules(courses: Course[]) {
+  return courses.flatMap(course => course.missions.flatMap(mission => mission.modules));
+}
 
-  const fetchMissions = useCallback(async () => {
+export function useTracker() {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchCourses = useCallback(async () => {
     try {
-      const data = await apiFetch<Mission[]>('/api/missions');
-      setMissions(data);
+      const data = await apiFetch<Course[]>('/api/missions');
+      setCourses(data);
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -32,109 +36,165 @@ export function useTracker() {
     }
   }, []);
 
-  useEffect(() => { fetchMissions(); }, [fetchMissions]);
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
 
-  // ── Missions ───────────────────────────────────────────────────────────────
+  const missions = courses.flatMap(course => course.missions);
 
-  const addMission = useCallback(async (title: string) => {
+  const addCourse = useCallback(async (title: string) => {
+    const created = await apiFetch<Course>('/api/missions', {
+      method: 'POST',
+      body: JSON.stringify({ kind: 'course', title }),
+    });
+    setCourses(prev => [...prev, created]);
+    return created;
+  }, []);
+
+  const deleteCourse = useCallback(async (id: number) => {
+    await apiFetch(`/api/missions/${id}?kind=course`, { method: 'DELETE' });
+    setCourses(prev => prev.filter(course => course.id !== id));
+  }, []);
+
+  const resetCourse = useCallback(async (courseId: number) => {
+    const updated = await apiFetch<Course>(`/api/missions/${courseId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ kind: 'reset-course' }),
+    });
+    setCourses(prev => prev.map(course => course.id === courseId ? updated : course));
+  }, []);
+
+  const addMission = useCallback(async (courseId: number, title: string) => {
     const created = await apiFetch<Mission>('/api/missions', {
       method: 'POST',
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ courseId, title }),
     });
-    setMissions(prev => [...prev, created]);
+    setCourses(prev => prev.map(course =>
+      course.id === courseId ? { ...course, missions: [...course.missions, created] } : course
+    ));
   }, []);
 
-  const deleteMission = useCallback(async (id: number) => {
+  const deleteMission = useCallback(async (courseId: number, id: number) => {
     await apiFetch(`/api/missions/${id}`, { method: 'DELETE' });
-    setMissions(prev => prev.filter(m => m.id !== id));
+    setCourses(prev => prev.map(course =>
+      course.id === courseId
+        ? { ...course, missions: course.missions.filter(mission => mission.id !== id) }
+        : course
+    ));
   }, []);
 
-  // ── Modules ────────────────────────────────────────────────────────────────
+  const addModule = useCallback(
+    async (missionId: number, name: string, durationMinutes: number, link?: string) => {
+      const created = await apiFetch<Mission['modules'][number]>(
+        `/api/missions/${missionId}`,
+        { method: 'POST', body: JSON.stringify({ name, durationMinutes, link }) }
+      );
 
-  const addModule = useCallback(async (missionId: number, name: string, durationMinutes: number) => {
-    const created = await apiFetch<Mission['modules'][number]>(
-      `/api/missions/${missionId}`,
-      { method: 'POST', body: JSON.stringify({ name, durationMinutes }) }
-    );
-    setMissions(prev =>
-      prev.map(m => m.id === missionId ? { ...m, modules: [...m.modules, created] } : m)
-    );
-  }, []);
+      setCourses(prev => prev.map(course => ({
+        ...course,
+        missions: course.missions.map(mission =>
+          mission.id === missionId
+            ? { ...mission, modules: [...mission.modules, created] }
+            : mission
+        ),
+      })));
+    },
+    []
+  );
 
   const toggleModule = useCallback(async (missionId: number, moduleId: number) => {
-    // Optimistic update
-    setMissions(prev => prev.map(m =>
-      m.id !== missionId ? m : {
-        ...m,
-        modules: m.modules.map(mod =>
-          mod.id === moduleId ? { ...mod, done: !mod.done } : mod
-        ),
-      }
-    ));
+    const toggle = (courseList: Course[]) => courseList.map(course => ({
+      ...course,
+      missions: course.missions.map(mission =>
+        mission.id === missionId
+          ? {
+              ...mission,
+              modules: mission.modules.map(mod =>
+                mod.id === moduleId ? { ...mod, done: !mod.done } : mod
+              ),
+            }
+          : mission
+      ),
+    }));
+
+    setCourses(toggle);
     try {
       await apiFetch(`/api/modules/${moduleId}/toggle`, { method: 'PATCH' });
     } catch {
-      // Revert on failure
-      setMissions(prev => prev.map(m =>
-        m.id !== missionId ? m : {
-          ...m,
-          modules: m.modules.map(mod =>
-            mod.id === moduleId ? { ...mod, done: !mod.done } : mod
-          ),
-        }
-      ));
+      setCourses(toggle);
     }
   }, []);
 
   const deleteModule = useCallback(async (missionId: number, moduleId: number) => {
     await apiFetch(`/api/modules/${moduleId}`, { method: 'DELETE' });
-    setMissions(prev =>
-      prev.map(m =>
-        m.id !== missionId ? m : {
-          ...m,
-          modules: m.modules.filter(mod => mod.id !== moduleId),
-        }
-      )
-    );
+    setCourses(prev => prev.map(course => ({
+      ...course,
+      missions: course.missions.map(mission =>
+        mission.id === missionId
+          ? { ...mission, modules: mission.modules.filter(mod => mod.id !== moduleId) }
+          : mission
+      ),
+    })));
   }, []);
 
-  // ── Stats ──────────────────────────────────────────────────────────────────
-
   const overallStats: MissionStats = (() => {
-    const total = missions.reduce((acc, m) => acc + m.modules.length, 0);
-    const done  = missions.reduce((acc, m) => acc + m.modules.filter(mod => mod.done).length, 0);
-    return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
+    const modules = getModules(courses);
+    const done = modules.filter(mod => mod.done).length;
+    return { total: modules.length, done, pct: modules.length ? Math.round((done / modules.length) * 100) : 0 };
   })();
 
   const timeStats: TimeStats = (() => {
-    const modules = missions.flatMap(mission => mission.modules);
+    const modules = getModules(courses);
     const totalMinutes = modules.reduce((acc, mod) => acc + mod.durationMinutes, 0);
-    const finishedMinutes = modules.reduce(
-      (acc, mod) => mod.done ? acc + mod.durationMinutes : acc,
-      0
-    );
+    const finishedMinutes = modules.reduce((acc, mod) => mod.done ? acc + mod.durationMinutes : acc, 0);
 
     return { totalMinutes, finishedMinutes, remainingMinutes: totalMinutes - finishedMinutes };
   })();
 
   const getMissionStats = (mission: Mission): MissionStats => {
     const total = mission.modules.length;
-    const done  = mission.modules.filter(m => m.done).length;
+    const done = mission.modules.filter(m => m.done).length;
     return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
   };
 
+  const getCourseStats = (course: Course): MissionStats => {
+    const modules = course.missions.flatMap(mission => mission.modules);
+    const done = modules.filter(mod => mod.done).length;
+    return { total: modules.length, done, pct: modules.length ? Math.round((done / modules.length) * 100) : 0 };
+  };
+
+  const getCourseTimeStats = (course: Course): TimeStats => {
+    const modules = course.missions.flatMap(mission => mission.modules);
+    const totalMinutes = modules.reduce((acc, mod) => acc + mod.durationMinutes, 0);
+    const finishedMinutes = modules.reduce((acc, mod) => mod.done ? acc + mod.durationMinutes : acc, 0);
+
+    return { totalMinutes, finishedMinutes, remainingMinutes: totalMinutes - finishedMinutes };
+  };
+
+  const isCourseFinished = (course: Course) => {
+    const stats = getCourseStats(course);
+    return stats.total > 0 && stats.done === stats.total;
+  };
+
   return {
+    courses,
     missions,
     loading,
     error,
     overallStats,
     timeStats,
+    getCourseStats,
+    getCourseTimeStats,
     getMissionStats,
+    isCourseFinished,
+    addCourse,
+    deleteCourse,
+    resetCourse,
     addMission,
     deleteMission,
     addModule,
     toggleModule,
     deleteModule,
-    refresh: fetchMissions,
+    refresh: fetchCourses,
   };
 }

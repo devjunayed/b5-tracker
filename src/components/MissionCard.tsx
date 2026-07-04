@@ -10,10 +10,10 @@ import { formatMinutes } from '@/lib/time';
 interface Props {
   mission: Mission;
   stats: MissionStats;
-  onAddModule: (missionId: number, name: string, durationMinutes: number) => Promise<void>;
+  onAddModule: (missionId: number, name: string, durationMinutes: number, link?: string) => Promise<void>;
   onToggleModule: (missionId: number, moduleId: number) => void;
   onDeleteModule: (missionId: number, moduleId: number, title: string) => void;
-  onDeleteMission: (id: number, title: string) => void;
+  onDeleteMission: (courseId: number, id: number, title: string) => void;
 }
 
 export function MissionCard({
@@ -51,7 +51,7 @@ export function MissionCard({
           <button
             className="delete-btn"
             style={{ opacity: hovering ? 1 : 0 }}
-            onClick={e => { e.stopPropagation(); onDeleteMission(mission.id, mission.title); }}
+            onClick={e => { e.stopPropagation(); onDeleteMission(mission.courseId, mission.id, mission.title); }}
             aria-label="Delete mission"
           >
             x
@@ -77,8 +77,8 @@ export function MissionCard({
           {adding ? (
             <div style={{ padding: '8px 16px' }}>
               <AddModuleForm
-                onSubmit={async (name, durationMinutes) => {
-                  await onAddModule(mission.id, name, durationMinutes);
+                onSubmit={async (name, durationMinutes, link) => {
+                  await onAddModule(mission.id, name, durationMinutes, link);
                   setAdding(false);
                 }}
                 onCancel={() => setAdding(false)}
