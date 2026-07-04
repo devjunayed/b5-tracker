@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Course {
+  id        Int       @id @default(autoincrement())
+  title     String
+  position  Int       @default(0)
+  createdAt DateTime  @default(now())
+  missions  Mission[]
+
+  @@map("courses")
+}
+
+model Mission {
+  id          Int      @id @default(autoincrement())
+  courseId    Int
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title       String
+  timeMinutes Int      @default(0)
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  modules     Module[]
+
+  @@map("missions")
+}
+
+model Module {
+  id              Int      @id @default(autoincrement())
+  missionId       Int
+  mission         Mission  @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  name            String
+  link            String?
+  durationMinutes Int      @default(0)
+  done            Boolean  @default(false)
+  position        Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  @@map("modules")
+}
