@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import type { Module } from '@/types';
-import { formatMinutes } from '@/lib/time';
+import { formatTime } from '@/lib/time';
 
 interface Props {
   mod: Module;
@@ -42,7 +42,7 @@ export function ModuleItem({ mod, missionId, onToggle, onDelete }: Props) {
           Open
         </a>
       )}
-      <span className="module-duration">{formatMinutes(mod.durationMinutes)}</span>
+      <span className="module-duration">{formatTime(mod.durationMinutes)}</span>
       <button
         className="delete-btn"
         style={{ opacity: hovered ? 1 : 0 }}

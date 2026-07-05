@@ -5,7 +5,7 @@ import type { Mission, MissionStats } from '@/types';
 import { ModuleItem } from './ModuleItem';
 import { ProgressBar } from './ProgressBar';
 import { AddModuleForm } from './AddModuleForm';
-import { formatMinutes } from '@/lib/time';
+import { formatTime } from '@/lib/time';
 
 interface Props {
   mission: Mission;
@@ -43,7 +43,7 @@ export function MissionCard({
         </div>
 
         <div className="mission-header-right">
-          <span className="time-pill">{formatMinutes(missionTime)}</span>
+          <span className="time-pill">{formatTime(missionTime)}</span>
           <div className="mini-progress">
             <ProgressBar pct={stats.pct} size="sm" />
           </div>

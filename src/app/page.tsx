@@ -7,7 +7,7 @@ import { ProgressBar } from '@/components/ProgressBar';
 import { AddForm } from '@/components/AddForm';
 import { ConfirmModal } from '@/components/ConfirmModal';
 import { ResetModal } from '@/components/ResetModal';
-import { formatMinutes } from '@/lib/time';
+import { formatTime } from '@/lib/time';
 
 export default function Home() {
   const {
@@ -139,8 +139,8 @@ export default function Home() {
         </div>
         <div className="summary-card">
           <span className="summary-label">Time</span>
-          <strong>{formatMinutes(dashboard.finishedMinutes)}</strong>
-          <span className="summary-detail">{formatMinutes(dashboard.remainingMinutes)} left</span>
+          <strong>{formatTime(dashboard.finishedMinutes)}</strong>
+          <span className="summary-detail">{formatTime(dashboard.remainingMinutes)} left</span>
         </div>
       </section>
 
