@@ -26,6 +26,8 @@ export function getModuleDisplayState(module: Module): ModuleDisplayState {
     0,
   );
 
+
+
   return {
     done: completedSubmodules > 0 && completedSubmodules === submoduleCount,
     durationMinutes,

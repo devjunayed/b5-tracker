@@ -58,11 +58,17 @@ export function ModuleItem({
   return (
     <div
       className="module-row"
-      onClick={() => setOpen((o) => !o)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <div className="module-main">
+        <span
+          onClick={() => setOpen((o) => !o)}
+          className="chevron cursor-pointer"
+          style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
+        >
+          &rsaquo;
+        </span>
         <label className="module-label">
           {submoduleTotal == 0 && (
             <input
@@ -78,25 +84,22 @@ export function ModuleItem({
             />
           )}
 
-          {submoduleTotal > 0 && (
+          {submoduleTotal > 0 ? (
             <span
-              className="chevron"
-              style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
+              onClick={() => setOpen((o) => !o)}
+              className={displayState.done ? "module-name done" : "module-name"}
             >
-              &rsaquo;
+              {mod.name}
+            </span>
+          ) : (
+            <span
+              className={displayState.done ? "module-name done" : "module-name"}
+            >
+              {mod.name}
             </span>
           )}
 
-          <span
-            className={displayState.done ? "module-name done" : "module-name"}
-          >
-            {mod.name}
-          </span>
-          {/* <span
-            className={displayState.done ? "module-name done" : "module-name"}
-          >
-            {mod.name}
-          </span> */}
+     
         </label>
 
         {mod.link && (

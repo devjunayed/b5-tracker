@@ -73,7 +73,9 @@ body {
   z-index: 25;
   color: var(--text);
 }
-
+.cursor-pointer {
+  cursor: pointer;
+}
 .pomodoro-compact {
   display: grid;
   grid-template-columns: auto auto auto;

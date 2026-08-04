@@ -296,15 +296,39 @@ export function useTracker() {
     [],
   );
 
+  const getModuleFinishedMinutes = useCallback(
+    (module: Mission["modules"][number]) => {
+      if (module.submodules.length === 0) {
+        return module.done ? module.durationMinutes : 0;
+      }
+      return module.submodules.reduce(
+        (acc, submodule) =>
+          acc + (submodule.done ? submodule.durationMinutes : 0),
+        0,
+      );
+    },
+    [],
+  );
+
   const overallStats: MissionStats = (() => {
     const modules = getModules(courses);
     const done = modules.filter(
       (mod) => getModuleDisplayState(mod).done,
     ).length;
+    const totalMinutes = modules.reduce(
+      (acc, mod) => acc + getModuleDisplayState(mod).durationMinutes,
+      0,
+    );
+    const finishedMinutes = modules.reduce(
+      (acc, mod) => acc + getModuleFinishedMinutes(mod),
+      0,
+    );
     return {
       total: modules.length,
       done,
-      pct: modules.length ? Math.round((done / modules.length) * 100) : 0,
+      pct: totalMinutes
+        ? Math.round((finishedMinutes / totalMinutes) * 100)
+        : 0,
     };
   })();
 
@@ -315,10 +339,7 @@ export function useTracker() {
       0,
     );
     const finishedMinutes = modules.reduce(
-      (acc, mod) =>
-        getModuleDisplayState(mod).done
-          ? acc + getModuleDisplayState(mod).durationMinutes
-          : acc,
+      (acc, mod) => acc + getModuleFinishedMinutes(mod),
       0,
     );
 
@@ -334,7 +355,21 @@ export function useTracker() {
     const done = mission.modules.filter(
       (m) => getModuleDisplayState(m).done,
     ).length;
-    return { total, done, pct: total ? Math.round((done / total) * 100) : 0 };
+    const totalMinutes = mission.modules.reduce(
+      (acc, mod) => acc + getModuleDisplayState(mod).durationMinutes,
+      0,
+    );
+    const finishedMinutes = mission.modules.reduce(
+      (acc, mod) => acc + getModuleFinishedMinutes(mod),
+      0,
+    );
+    return {
+      total,
+      done,
+      pct: totalMinutes
+        ? Math.round((finishedMinutes / totalMinutes) * 100)
+        : 0,
+    };
   };
 
   const getCourseStats = (course: Course): MissionStats => {
@@ -342,10 +377,20 @@ export function useTracker() {
     const done = modules.filter(
       (mod) => getModuleDisplayState(mod).done,
     ).length;
+    const totalMinutes = modules.reduce(
+      (acc, mod) => acc + getModuleDisplayState(mod).durationMinutes,
+      0,
+    );
+    const finishedMinutes = modules.reduce(
+      (acc, mod) => acc + getModuleFinishedMinutes(mod),
+      0,
+    );
     return {
       total: modules.length,
       done,
-      pct: modules.length ? Math.round((done / modules.length) * 100) : 0,
+      pct: totalMinutes
+        ? Math.round((finishedMinutes / totalMinutes) * 100)
+        : 0,
     };
   };
 
@@ -356,10 +401,7 @@ export function useTracker() {
       0,
     );
     const finishedMinutes = modules.reduce(
-      (acc, mod) =>
-        getModuleDisplayState(mod).done
-          ? acc + getModuleDisplayState(mod).durationMinutes
-          : acc,
+      (acc, mod) => acc + getModuleFinishedMinutes(mod),
       0,
     );
 
