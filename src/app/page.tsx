@@ -6,6 +6,7 @@ import { MissionCard } from "@/components/MissionCard";
 import { ProgressBar } from "@/components/ProgressBar";
 import { AddForm } from "@/components/AddForm";
 import { ConfirmModal } from "@/components/ConfirmModal";
+import { PomodoroWidget } from "@/components/PomodoroWidget";
 import { ResetModal } from "@/components/ResetModal";
 import { formatTime } from "@/lib/time";
 
@@ -129,6 +130,8 @@ export default function Home() {
 
   return (
     <main className="page dashboard-page">
+      <PomodoroWidget />
+
       {error && (
         <div className="error-banner">
           <span>{error}</span>
