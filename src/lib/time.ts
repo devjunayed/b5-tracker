@@ -1,5 +1,6 @@
 export function formatTime(totalSeconds: number): string {
   const seconds = Math.max(0, Math.floor(totalSeconds));
+  if (seconds === 0) return "";
 
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -10,8 +11,7 @@ export function formatTime(totalSeconds: number): string {
   if (hours && minutes) return `${hours}h ${minutes}m`;
   if (hours) return `${hours}h`;
 
-  if (minutes && remainingSeconds)
-    return `${minutes}m ${remainingSeconds}s`;
+  if (minutes && remainingSeconds) return `${minutes}m ${remainingSeconds}s`;
   if (minutes) return `${minutes}m`;
 
   return `${remainingSeconds}s`;
@@ -34,7 +34,8 @@ export function parseTimeInput(value: string): number | null {
     !Number.isInteger(hours) ||
     !Number.isInteger(minutes) ||
     !Number.isInteger(seconds)
-  ) return null;
+  )
+    return null;
 
   return hours * 3600 + minutes * 60 + seconds;
 }

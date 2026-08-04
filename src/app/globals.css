@@ -545,13 +545,21 @@ body {
 
 .module-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0.55rem 1rem 0.55rem 1.25rem;
+  padding: 0;
   transition: background 0.12s;
-  gap: 8px;
 }
 .module-row:hover { background: var(--surface2); }
+
+.module-main {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  padding: 0.55rem 1rem 0.55rem 1.25rem;
+}
 
 .module-label {
   display: flex;
@@ -568,17 +576,63 @@ body {
   accent-color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
+  opacity: 1;
 }
 
 .module-name {
   font-size: 0.95rem;
   color: var(--text);
   transition: color 0.15s;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .module-name.done {
   color: var(--muted);
   text-decoration: line-through;
   text-decoration-color: var(--border);
+}
+
+.module-submodule-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.submodule-form {
+  width: 100%;
+  padding: 0.25rem 1rem 0.55rem 2.8rem;
+}
+
+.submodule-list {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 0.15rem 1rem 0.2rem 2.8rem;
+}
+
+.submodule-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0.35rem 0.5rem;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  border-radius: 8px;
+}
+
+.submodule-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.submodule-delete-btn {
+  margin-left: 0;
 }
 
 .empty-hint {
@@ -603,6 +657,11 @@ body {
 }
 .add-module-btn:hover { color: var(--text); background: var(--surface2); }
 
+.submodule-add-btn {
+  padding-left: 2.8rem;
+  border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+
 .add-mission-btn {
   width: 100%;
   padding: 0.75rem;
@@ -624,6 +683,10 @@ body {
   align-items: center;
 }
 
+.add-module-form-wrap {
+  padding: 8px 16px;
+}
+
 .add-input {
   flex: 1;
   padding: 7px 10px;
@@ -639,16 +702,17 @@ body {
 .add-input.error { border-color: var(--danger); }
 
 .add-module-form {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(5.5rem, 7rem) minmax(10rem, 0.8fr) auto auto;
   align-items: stretch;
 }
 
 .duration-input {
-  flex: 0 0 90px;
   text-align: right;
 }
 
 .link-input {
-  flex: 1 1 150px;
+  min-width: 0;
 }
 
 .btn-primary {
@@ -746,6 +810,21 @@ body {
 .reset-input {
   width: 100%;
   margin-top: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .add-module-form {
+    grid-template-columns: minmax(0, 1fr) minmax(5.5rem, 7rem);
+  }
+
+  .add-module-form .link-input {
+    grid-column: 1 / -1;
+  }
+
+  .add-module-form .btn-primary,
+  .add-module-form .btn-ghost {
+    width: 100%;
+  }
 }
 
 /* ── Loading / Error ─────────────────────────────────────────────────────────── */
@@ -878,15 +957,47 @@ body {
     padding: 2px 7px;
   }
 
+  .add-module-form-wrap,
+  .submodule-form {
+    padding: 8px 12px;
+  }
+
   .add-module-form {
+    grid-template-columns: minmax(0, 1fr) minmax(5.5rem, 7rem);
+  }
+
+  .add-module-form .link-input {
+    grid-column: 1 / -1;
+  }
+
+  .add-module-form .btn-primary,
+  .add-module-form .btn-ghost {
+    width: 100%;
+  }
+
+  .module-main,
+  .submodule-row {
     flex-wrap: wrap;
   }
 
-  .duration-input {
-    flex: 1 1 90px;
+  .module-submodule-progress {
+    order: 3;
+    width: 100%;
+    padding-left: 25px;
   }
 
-  .link-input {
-    flex-basis: 100%;
+  .module-submodule-progress .mini-progress {
+    display: block;
+    flex: 1;
+  }
+
+  .submodule-form,
+  .submodule-list {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .submodule-add-btn {
+    padding-left: 1.25rem;
   }
 }

@@ -1,0 +1,80 @@
+
+> batch5-tracker@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.100:3000
+- Environments: .env
+✓ Ready in 3.2s
+Creating turbopack project { dir: 'D:\\Projects\\tracker', testMode: true }
+
+ GET / 200 in 1495ms (next.js: 772ms, application-code: 724ms)
+ GET / 200 in 300ms (next.js: 15ms, application-code: 285ms)
+ GET /api/missions 500 in 5.6s (next.js: 633ms, application-code: 5.0s)
+ GET /api/missions 500 in 7.7s (next.js: 10ms, application-code: 7.7s)
+ GET / 200 in 278ms (next.js: 15ms, application-code: 263ms)
+ GET /api/missions 200 in 2.9s (next.js: 12ms, application-code: 2.9s)
+ GET / 200 in 98ms (next.js: 11ms, application-code: 87ms)
+ GET /api/missions 200 in 2.3s (next.js: 15ms, application-code: 2.3s)
+ PATCH /api/submodules/1/toggle 200 in 3.3s (next.js: 2.3s, application-code: 998ms)
+ POST /api/modules/1814/submodules 201 in 2.1s (next.js: 1627ms, application-code: 443ms)
+ PATCH /api/submodules/2/toggle 200 in 951ms (next.js: 20ms, application-code: 931ms)
+ PATCH /api/submodules/2/toggle 200 in 314ms (next.js: 6ms, application-code: 308ms)
+ PATCH /api/submodules/3/toggle 200 in 412ms (next.js: 17ms, application-code: 395ms)
+ PATCH /api/submodules/2/toggle 200 in 318ms (next.js: 14ms, application-code: 304ms)
+ PATCH /api/submodules/4/toggle 200 in 314ms (next.js: 6ms, application-code: 308ms)
+ PATCH /api/submodules/5/toggle 200 in 329ms (next.js: 20ms, application-code: 309ms)
+ PATCH /api/submodules/1/toggle 200 in 323ms (next.js: 14ms, application-code: 309ms)
+ PATCH /api/submodules/1/toggle 200 in 428ms (next.js: 15ms, application-code: 414ms)
+ PATCH /api/submodules/1/toggle 200 in 326ms (next.js: 8ms, application-code: 318ms)
+ PATCH /api/submodules/1/toggle 200 in 326ms (next.js: 14ms, application-code: 311ms)
+✓ Compiled in 330ms
+ GET / 200 in 1039ms (next.js: 611ms, application-code: 428ms)
+✓ Compiled in 99ms
+✓ Compiled in 70ms
+ GET / 200 in 419ms (next.js: 255ms, application-code: 164ms)
+✓ Compiled in 93ms
+✓ Compiled in 49ms
+ GET / 200 in 384ms (next.js: 11ms, application-code: 373ms)
+✓ Compiled in 77ms
+ GET / 200 in 303ms (next.js: 168ms, application-code: 135ms)
+✓ Compiled in 299ms
+ GET / 200 in 324ms (next.js: 228ms, application-code: 96ms)
+ PATCH /api/submodules/1/toggle 200 in 1516ms (next.js: 290ms, application-code: 1226ms)
+ PATCH /api/submodules/1/toggle 200 in 981ms (next.js: 5ms, application-code: 976ms)
+ PATCH /api/submodules/1/toggle 200 in 309ms (next.js: 6ms, application-code: 303ms)
+ PATCH /api/submodules/1/toggle 200 in 323ms (next.js: 7ms, application-code: 316ms)
+ PATCH /api/submodules/1/toggle 200 in 344ms (next.js: 13ms, application-code: 331ms)
+ PATCH /api/submodules/2/toggle 200 in 333ms (next.js: 13ms, application-code: 321ms)
+ PATCH /api/submodules/3/toggle 200 in 362ms (next.js: 4ms, application-code: 357ms)
+ PATCH /api/submodules/4/toggle 200 in 377ms (next.js: 13ms, application-code: 364ms)
+ PATCH /api/submodules/5/toggle 200 in 310ms (next.js: 5ms, application-code: 304ms)
+✓ Compiled in 143ms
+✓ Compiled in 222ms
+✓ Compiled in 164ms
+✓ Compiled in 939ms
+ GET / 200 in 919ms (next.js: 380ms, application-code: 539ms)
+ GET / 200 in 1693ms (next.js: 888ms, application-code: 805ms)
+ GET / 200 in 209ms (next.js: 25ms, application-code: 184ms)
+ GET / 200 in 209ms (next.js: 14ms, application-code: 195ms)
+ GET / 200 in 118ms (next.js: 36ms, application-code: 82ms)
+ GET / 200 in 132ms (next.js: 19ms, application-code: 113ms)
+ GET / 200 in 218ms (next.js: 22ms, application-code: 196ms)
+ GET / 200 in 480ms (next.js: 32ms, application-code: 448ms)
+ GET / 200 in 365ms (next.js: 13ms, application-code: 352ms)
+ GET / 200 in 920ms (next.js: 12ms, application-code: 908ms)
+ GET / 200 in 672ms (next.js: 233ms, application-code: 440ms)
+ GET / 200 in 309ms (next.js: 117ms, application-code: 193ms)
+ GET / 200 in 351ms (next.js: 38ms, application-code: 314ms)
+ GET / 200 in 338ms (next.js: 75ms, application-code: 263ms)
+ GET / 200 in 119ms (next.js: 17ms, application-code: 102ms)
+ GET / 200 in 74ms (next.js: 16ms, application-code: 58ms)
+ GET / 200 in 81ms (next.js: 13ms, application-code: 68ms)
+ GET / 200 in 434ms (next.js: 28ms, application-code: 406ms)
+ GET / 200 in 251ms (next.js: 52ms, application-code: 199ms)
+✓ Compiled in 135ms
+ GET /api/missions 200 in 5.3s (next.js: 1563ms, application-code: 3.7s)
+ GET / 200 in 531ms (next.js: 167ms, application-code: 364ms)
+ GET / 200 in 113ms (next.js: 45ms, application-code: 68ms)
+ GET /api/missions 200 in 1065ms (next.js: 14ms, application-code: 1051ms)

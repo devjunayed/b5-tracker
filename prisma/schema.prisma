@@ -31,9 +31,24 @@ model Mission {
 }
 
 model Module {
-  id              Int      @id @default(autoincrement())
+  id              Int         @id @default(autoincrement())
   missionId       Int
-  mission         Mission  @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  mission         Mission     @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  name            String
+  link            String?
+  durationMinutes Int         @default(0)
+  done            Boolean     @default(false)
+  position        Int         @default(0)
+  createdAt       DateTime    @default(now())
+  submodules      Submodule[]
+
+  @@map("modules")
+}
+
+model Submodule {
+  id              Int      @id @default(autoincrement())
+  moduleId        Int
+  module          Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   name            String
   link            String?
   durationMinutes Int      @default(0)
@@ -41,5 +56,5 @@ model Module {
   position        Int      @default(0)
   createdAt       DateTime @default(now())
 
-  @@map("modules")
+  @@map("submodules")
 }

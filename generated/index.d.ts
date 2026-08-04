@@ -28,6 +28,11 @@ export type Mission = $Result.DefaultSelection<Prisma.$MissionPayload>
  * 
  */
 export type Module = $Result.DefaultSelection<Prisma.$ModulePayload>
+/**
+ * Model Submodule
+ * 
+ */
+export type Submodule = $Result.DefaultSelection<Prisma.$SubmodulePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -179,6 +184,16 @@ export class PrismaClient<
     * ```
     */
   get module(): Prisma.ModuleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.submodule`: Exposes CRUD operations for the **Submodule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Submodules
+    * const submodules = await prisma.submodule.findMany()
+    * ```
+    */
+  get submodule(): Prisma.SubmoduleDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -615,7 +630,8 @@ export namespace Prisma {
   export const ModelName: {
     Course: 'Course',
     Mission: 'Mission',
-    Module: 'Module'
+    Module: 'Module',
+    Submodule: 'Submodule'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -631,7 +647,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "course" | "mission" | "module"
+      modelProps: "course" | "mission" | "module" | "submodule"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -857,6 +873,80 @@ export namespace Prisma {
           }
         }
       }
+      Submodule: {
+        payload: Prisma.$SubmodulePayload<ExtArgs>
+        fields: Prisma.SubmoduleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubmoduleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubmoduleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          findFirst: {
+            args: Prisma.SubmoduleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubmoduleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          findMany: {
+            args: Prisma.SubmoduleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>[]
+          }
+          create: {
+            args: Prisma.SubmoduleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          createMany: {
+            args: Prisma.SubmoduleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubmoduleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>[]
+          }
+          delete: {
+            args: Prisma.SubmoduleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          update: {
+            args: Prisma.SubmoduleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          deleteMany: {
+            args: Prisma.SubmoduleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubmoduleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubmoduleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>[]
+          }
+          upsert: {
+            args: Prisma.SubmoduleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmodulePayload>
+          }
+          aggregate: {
+            args: Prisma.SubmoduleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubmodule>
+          }
+          groupBy: {
+            args: Prisma.SubmoduleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubmoduleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubmoduleCountArgs<ExtArgs>
+            result: $Utils.Optional<SubmoduleCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -968,6 +1058,7 @@ export namespace Prisma {
     course?: CourseOmit
     mission?: MissionOmit
     module?: ModuleOmit
+    submodule?: SubmoduleOmit
   }
 
   /* Types for Logging */
@@ -1102,6 +1193,37 @@ export namespace Prisma {
    */
   export type MissionCountOutputTypeCountModulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ModuleWhereInput
+  }
+
+
+  /**
+   * Count Type ModuleCountOutputType
+   */
+
+  export type ModuleCountOutputType = {
+    submodules: number
+  }
+
+  export type ModuleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submodules?: boolean | ModuleCountOutputTypeCountSubmodulesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ModuleCountOutputType without action
+   */
+  export type ModuleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleCountOutputType
+     */
+    select?: ModuleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ModuleCountOutputType without action
+   */
+  export type ModuleCountOutputTypeCountSubmodulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmoduleWhereInput
   }
 
 
@@ -3596,6 +3718,8 @@ export namespace Prisma {
     position?: boolean
     createdAt?: boolean
     mission?: boolean | MissionDefaultArgs<ExtArgs>
+    submodules?: boolean | Module$submodulesArgs<ExtArgs>
+    _count?: boolean | ModuleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["module"]>
 
   export type ModuleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3636,6 +3760,8 @@ export namespace Prisma {
   export type ModuleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "missionId" | "name" | "link" | "durationMinutes" | "done" | "position" | "createdAt", ExtArgs["result"]["module"]>
   export type ModuleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mission?: boolean | MissionDefaultArgs<ExtArgs>
+    submodules?: boolean | Module$submodulesArgs<ExtArgs>
+    _count?: boolean | ModuleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ModuleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mission?: boolean | MissionDefaultArgs<ExtArgs>
@@ -3648,6 +3774,7 @@ export namespace Prisma {
     name: "Module"
     objects: {
       mission: Prisma.$MissionPayload<ExtArgs>
+      submodules: Prisma.$SubmodulePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4053,6 +4180,7 @@ export namespace Prisma {
   export interface Prisma__ModuleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     mission<T extends MissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MissionDefaultArgs<ExtArgs>>): Prisma__MissionClient<$Result.GetResult<Prisma.$MissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    submodules<T extends Module$submodulesArgs<ExtArgs> = {}>(args?: Subset<T, Module$submodulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4491,6 +4619,30 @@ export namespace Prisma {
   }
 
   /**
+   * Module.submodules
+   */
+  export type Module$submodulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    where?: SubmoduleWhereInput
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    cursor?: SubmoduleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
+  }
+
+  /**
    * Module without action
    */
   export type ModuleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4506,6 +4658,1154 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ModuleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Submodule
+   */
+
+  export type AggregateSubmodule = {
+    _count: SubmoduleCountAggregateOutputType | null
+    _avg: SubmoduleAvgAggregateOutputType | null
+    _sum: SubmoduleSumAggregateOutputType | null
+    _min: SubmoduleMinAggregateOutputType | null
+    _max: SubmoduleMaxAggregateOutputType | null
+  }
+
+  export type SubmoduleAvgAggregateOutputType = {
+    id: number | null
+    moduleId: number | null
+    durationMinutes: number | null
+    position: number | null
+  }
+
+  export type SubmoduleSumAggregateOutputType = {
+    id: number | null
+    moduleId: number | null
+    durationMinutes: number | null
+    position: number | null
+  }
+
+  export type SubmoduleMinAggregateOutputType = {
+    id: number | null
+    moduleId: number | null
+    name: string | null
+    link: string | null
+    durationMinutes: number | null
+    done: boolean | null
+    position: number | null
+    createdAt: Date | null
+  }
+
+  export type SubmoduleMaxAggregateOutputType = {
+    id: number | null
+    moduleId: number | null
+    name: string | null
+    link: string | null
+    durationMinutes: number | null
+    done: boolean | null
+    position: number | null
+    createdAt: Date | null
+  }
+
+  export type SubmoduleCountAggregateOutputType = {
+    id: number
+    moduleId: number
+    name: number
+    link: number
+    durationMinutes: number
+    done: number
+    position: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SubmoduleAvgAggregateInputType = {
+    id?: true
+    moduleId?: true
+    durationMinutes?: true
+    position?: true
+  }
+
+  export type SubmoduleSumAggregateInputType = {
+    id?: true
+    moduleId?: true
+    durationMinutes?: true
+    position?: true
+  }
+
+  export type SubmoduleMinAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    link?: true
+    durationMinutes?: true
+    done?: true
+    position?: true
+    createdAt?: true
+  }
+
+  export type SubmoduleMaxAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    link?: true
+    durationMinutes?: true
+    done?: true
+    position?: true
+    createdAt?: true
+  }
+
+  export type SubmoduleCountAggregateInputType = {
+    id?: true
+    moduleId?: true
+    name?: true
+    link?: true
+    durationMinutes?: true
+    done?: true
+    position?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SubmoduleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submodule to aggregate.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Submodules
+    **/
+    _count?: true | SubmoduleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubmoduleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubmoduleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubmoduleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubmoduleMaxAggregateInputType
+  }
+
+  export type GetSubmoduleAggregateType<T extends SubmoduleAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubmodule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubmodule[P]>
+      : GetScalarType<T[P], AggregateSubmodule[P]>
+  }
+
+
+
+
+  export type SubmoduleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmoduleWhereInput
+    orderBy?: SubmoduleOrderByWithAggregationInput | SubmoduleOrderByWithAggregationInput[]
+    by: SubmoduleScalarFieldEnum[] | SubmoduleScalarFieldEnum
+    having?: SubmoduleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubmoduleCountAggregateInputType | true
+    _avg?: SubmoduleAvgAggregateInputType
+    _sum?: SubmoduleSumAggregateInputType
+    _min?: SubmoduleMinAggregateInputType
+    _max?: SubmoduleMaxAggregateInputType
+  }
+
+  export type SubmoduleGroupByOutputType = {
+    id: number
+    moduleId: number
+    name: string
+    link: string | null
+    durationMinutes: number
+    done: boolean
+    position: number
+    createdAt: Date
+    _count: SubmoduleCountAggregateOutputType | null
+    _avg: SubmoduleAvgAggregateOutputType | null
+    _sum: SubmoduleSumAggregateOutputType | null
+    _min: SubmoduleMinAggregateOutputType | null
+    _max: SubmoduleMaxAggregateOutputType | null
+  }
+
+  type GetSubmoduleGroupByPayload<T extends SubmoduleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubmoduleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubmoduleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubmoduleGroupByOutputType[P]>
+            : GetScalarType<T[P], SubmoduleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubmoduleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    durationMinutes?: boolean
+    done?: boolean
+    position?: boolean
+    createdAt?: boolean
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submodule"]>
+
+  export type SubmoduleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    durationMinutes?: boolean
+    done?: boolean
+    position?: boolean
+    createdAt?: boolean
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submodule"]>
+
+  export type SubmoduleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    durationMinutes?: boolean
+    done?: boolean
+    position?: boolean
+    createdAt?: boolean
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submodule"]>
+
+  export type SubmoduleSelectScalar = {
+    id?: boolean
+    moduleId?: boolean
+    name?: boolean
+    link?: boolean
+    durationMinutes?: boolean
+    done?: boolean
+    position?: boolean
+    createdAt?: boolean
+  }
+
+  export type SubmoduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "moduleId" | "name" | "link" | "durationMinutes" | "done" | "position" | "createdAt", ExtArgs["result"]["submodule"]>
+  export type SubmoduleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+  export type SubmoduleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+  export type SubmoduleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    module?: boolean | ModuleDefaultArgs<ExtArgs>
+  }
+
+  export type $SubmodulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Submodule"
+    objects: {
+      module: Prisma.$ModulePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      moduleId: number
+      name: string
+      link: string | null
+      durationMinutes: number
+      done: boolean
+      position: number
+      createdAt: Date
+    }, ExtArgs["result"]["submodule"]>
+    composites: {}
+  }
+
+  type SubmoduleGetPayload<S extends boolean | null | undefined | SubmoduleDefaultArgs> = $Result.GetResult<Prisma.$SubmodulePayload, S>
+
+  type SubmoduleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubmoduleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubmoduleCountAggregateInputType | true
+    }
+
+  export interface SubmoduleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Submodule'], meta: { name: 'Submodule' } }
+    /**
+     * Find zero or one Submodule that matches the filter.
+     * @param {SubmoduleFindUniqueArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubmoduleFindUniqueArgs>(args: SelectSubset<T, SubmoduleFindUniqueArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Submodule that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubmoduleFindUniqueOrThrowArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubmoduleFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmoduleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submodule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleFindFirstArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubmoduleFindFirstArgs>(args?: SelectSubset<T, SubmoduleFindFirstArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submodule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleFindFirstOrThrowArgs} args - Arguments to find a Submodule
+     * @example
+     * // Get one Submodule
+     * const submodule = await prisma.submodule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubmoduleFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmoduleFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Submodules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Submodules
+     * const submodules = await prisma.submodule.findMany()
+     * 
+     * // Get first 10 Submodules
+     * const submodules = await prisma.submodule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const submoduleWithIdOnly = await prisma.submodule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubmoduleFindManyArgs>(args?: SelectSubset<T, SubmoduleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Submodule.
+     * @param {SubmoduleCreateArgs} args - Arguments to create a Submodule.
+     * @example
+     * // Create one Submodule
+     * const Submodule = await prisma.submodule.create({
+     *   data: {
+     *     // ... data to create a Submodule
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubmoduleCreateArgs>(args: SelectSubset<T, SubmoduleCreateArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Submodules.
+     * @param {SubmoduleCreateManyArgs} args - Arguments to create many Submodules.
+     * @example
+     * // Create many Submodules
+     * const submodule = await prisma.submodule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubmoduleCreateManyArgs>(args?: SelectSubset<T, SubmoduleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Submodules and returns the data saved in the database.
+     * @param {SubmoduleCreateManyAndReturnArgs} args - Arguments to create many Submodules.
+     * @example
+     * // Create many Submodules
+     * const submodule = await prisma.submodule.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Submodules and only return the `id`
+     * const submoduleWithIdOnly = await prisma.submodule.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubmoduleCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmoduleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Submodule.
+     * @param {SubmoduleDeleteArgs} args - Arguments to delete one Submodule.
+     * @example
+     * // Delete one Submodule
+     * const Submodule = await prisma.submodule.delete({
+     *   where: {
+     *     // ... filter to delete one Submodule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubmoduleDeleteArgs>(args: SelectSubset<T, SubmoduleDeleteArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Submodule.
+     * @param {SubmoduleUpdateArgs} args - Arguments to update one Submodule.
+     * @example
+     * // Update one Submodule
+     * const submodule = await prisma.submodule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubmoduleUpdateArgs>(args: SelectSubset<T, SubmoduleUpdateArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Submodules.
+     * @param {SubmoduleDeleteManyArgs} args - Arguments to filter Submodules to delete.
+     * @example
+     * // Delete a few Submodules
+     * const { count } = await prisma.submodule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubmoduleDeleteManyArgs>(args?: SelectSubset<T, SubmoduleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submodules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Submodules
+     * const submodule = await prisma.submodule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubmoduleUpdateManyArgs>(args: SelectSubset<T, SubmoduleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submodules and returns the data updated in the database.
+     * @param {SubmoduleUpdateManyAndReturnArgs} args - Arguments to update many Submodules.
+     * @example
+     * // Update many Submodules
+     * const submodule = await prisma.submodule.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Submodules and only return the `id`
+     * const submoduleWithIdOnly = await prisma.submodule.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubmoduleUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmoduleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Submodule.
+     * @param {SubmoduleUpsertArgs} args - Arguments to update or create a Submodule.
+     * @example
+     * // Update or create a Submodule
+     * const submodule = await prisma.submodule.upsert({
+     *   create: {
+     *     // ... data to create a Submodule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Submodule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubmoduleUpsertArgs>(args: SelectSubset<T, SubmoduleUpsertArgs<ExtArgs>>): Prisma__SubmoduleClient<$Result.GetResult<Prisma.$SubmodulePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Submodules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleCountArgs} args - Arguments to filter Submodules to count.
+     * @example
+     * // Count the number of Submodules
+     * const count = await prisma.submodule.count({
+     *   where: {
+     *     // ... the filter for the Submodules we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubmoduleCountArgs>(
+      args?: Subset<T, SubmoduleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubmoduleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Submodule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubmoduleAggregateArgs>(args: Subset<T, SubmoduleAggregateArgs>): Prisma.PrismaPromise<GetSubmoduleAggregateType<T>>
+
+    /**
+     * Group by Submodule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmoduleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubmoduleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubmoduleGroupByArgs['orderBy'] }
+        : { orderBy?: SubmoduleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubmoduleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmoduleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Submodule model
+   */
+  readonly fields: SubmoduleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Submodule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubmoduleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    module<T extends ModuleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ModuleDefaultArgs<ExtArgs>>): Prisma__ModuleClient<$Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Submodule model
+   */
+  interface SubmoduleFieldRefs {
+    readonly id: FieldRef<"Submodule", 'Int'>
+    readonly moduleId: FieldRef<"Submodule", 'Int'>
+    readonly name: FieldRef<"Submodule", 'String'>
+    readonly link: FieldRef<"Submodule", 'String'>
+    readonly durationMinutes: FieldRef<"Submodule", 'Int'>
+    readonly done: FieldRef<"Submodule", 'Boolean'>
+    readonly position: FieldRef<"Submodule", 'Int'>
+    readonly createdAt: FieldRef<"Submodule", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Submodule findUnique
+   */
+  export type SubmoduleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule findUniqueOrThrow
+   */
+  export type SubmoduleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule findFirst
+   */
+  export type SubmoduleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submodules.
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submodules.
+     */
+    distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule findFirstOrThrow
+   */
+  export type SubmoduleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodule to fetch.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submodules.
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submodules.
+     */
+    distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule findMany
+   */
+  export type SubmoduleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Submodules to fetch.
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submodules to fetch.
+     */
+    orderBy?: SubmoduleOrderByWithRelationInput | SubmoduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Submodules.
+     */
+    cursor?: SubmoduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submodules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submodules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submodules.
+     */
+    distinct?: SubmoduleScalarFieldEnum | SubmoduleScalarFieldEnum[]
+  }
+
+  /**
+   * Submodule create
+   */
+  export type SubmoduleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Submodule.
+     */
+    data: XOR<SubmoduleCreateInput, SubmoduleUncheckedCreateInput>
+  }
+
+  /**
+   * Submodule createMany
+   */
+  export type SubmoduleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Submodules.
+     */
+    data: SubmoduleCreateManyInput | SubmoduleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Submodule createManyAndReturn
+   */
+  export type SubmoduleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * The data used to create many Submodules.
+     */
+    data: SubmoduleCreateManyInput | SubmoduleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Submodule update
+   */
+  export type SubmoduleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Submodule.
+     */
+    data: XOR<SubmoduleUpdateInput, SubmoduleUncheckedUpdateInput>
+    /**
+     * Choose, which Submodule to update.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule updateMany
+   */
+  export type SubmoduleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Submodules.
+     */
+    data: XOR<SubmoduleUpdateManyMutationInput, SubmoduleUncheckedUpdateManyInput>
+    /**
+     * Filter which Submodules to update
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * Limit how many Submodules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submodule updateManyAndReturn
+   */
+  export type SubmoduleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * The data used to update Submodules.
+     */
+    data: XOR<SubmoduleUpdateManyMutationInput, SubmoduleUncheckedUpdateManyInput>
+    /**
+     * Filter which Submodules to update
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * Limit how many Submodules to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Submodule upsert
+   */
+  export type SubmoduleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Submodule to update in case it exists.
+     */
+    where: SubmoduleWhereUniqueInput
+    /**
+     * In case the Submodule found by the `where` argument doesn't exist, create a new Submodule with this data.
+     */
+    create: XOR<SubmoduleCreateInput, SubmoduleUncheckedCreateInput>
+    /**
+     * In case the Submodule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubmoduleUpdateInput, SubmoduleUncheckedUpdateInput>
+  }
+
+  /**
+   * Submodule delete
+   */
+  export type SubmoduleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
+    /**
+     * Filter which Submodule to delete.
+     */
+    where: SubmoduleWhereUniqueInput
+  }
+
+  /**
+   * Submodule deleteMany
+   */
+  export type SubmoduleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submodules to delete
+     */
+    where?: SubmoduleWhereInput
+    /**
+     * Limit how many Submodules to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submodule without action
+   */
+  export type SubmoduleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submodule
+     */
+    select?: SubmoduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submodule
+     */
+    omit?: SubmoduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmoduleInclude<ExtArgs> | null
   }
 
 
@@ -4557,6 +5857,20 @@ export namespace Prisma {
   };
 
   export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof ModuleScalarFieldEnum]
+
+
+  export const SubmoduleScalarFieldEnum: {
+    id: 'id',
+    moduleId: 'moduleId',
+    name: 'name',
+    link: 'link',
+    durationMinutes: 'durationMinutes',
+    done: 'done',
+    position: 'position',
+    createdAt: 'createdAt'
+  };
+
+  export type SubmoduleScalarFieldEnum = (typeof SubmoduleScalarFieldEnum)[keyof typeof SubmoduleScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4784,6 +6098,7 @@ export namespace Prisma {
     position?: IntFilter<"Module"> | number
     createdAt?: DateTimeFilter<"Module"> | Date | string
     mission?: XOR<MissionScalarRelationFilter, MissionWhereInput>
+    submodules?: SubmoduleListRelationFilter
   }
 
   export type ModuleOrderByWithRelationInput = {
@@ -4796,6 +6111,7 @@ export namespace Prisma {
     position?: SortOrder
     createdAt?: SortOrder
     mission?: MissionOrderByWithRelationInput
+    submodules?: SubmoduleOrderByRelationAggregateInput
   }
 
   export type ModuleWhereUniqueInput = Prisma.AtLeast<{
@@ -4811,6 +6127,7 @@ export namespace Prisma {
     position?: IntFilter<"Module"> | number
     createdAt?: DateTimeFilter<"Module"> | Date | string
     mission?: XOR<MissionScalarRelationFilter, MissionWhereInput>
+    submodules?: SubmoduleListRelationFilter
   }, "id">
 
   export type ModuleOrderByWithAggregationInput = {
@@ -4841,6 +6158,78 @@ export namespace Prisma {
     done?: BoolWithAggregatesFilter<"Module"> | boolean
     position?: IntWithAggregatesFilter<"Module"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Module"> | Date | string
+  }
+
+  export type SubmoduleWhereInput = {
+    AND?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    OR?: SubmoduleWhereInput[]
+    NOT?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    id?: IntFilter<"Submodule"> | number
+    moduleId?: IntFilter<"Submodule"> | number
+    name?: StringFilter<"Submodule"> | string
+    link?: StringNullableFilter<"Submodule"> | string | null
+    durationMinutes?: IntFilter<"Submodule"> | number
+    done?: BoolFilter<"Submodule"> | boolean
+    position?: IntFilter<"Submodule"> | number
+    createdAt?: DateTimeFilter<"Submodule"> | Date | string
+    module?: XOR<ModuleScalarRelationFilter, ModuleWhereInput>
+  }
+
+  export type SubmoduleOrderByWithRelationInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrderInput | SortOrder
+    durationMinutes?: SortOrder
+    done?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+    module?: ModuleOrderByWithRelationInput
+  }
+
+  export type SubmoduleWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    OR?: SubmoduleWhereInput[]
+    NOT?: SubmoduleWhereInput | SubmoduleWhereInput[]
+    moduleId?: IntFilter<"Submodule"> | number
+    name?: StringFilter<"Submodule"> | string
+    link?: StringNullableFilter<"Submodule"> | string | null
+    durationMinutes?: IntFilter<"Submodule"> | number
+    done?: BoolFilter<"Submodule"> | boolean
+    position?: IntFilter<"Submodule"> | number
+    createdAt?: DateTimeFilter<"Submodule"> | Date | string
+    module?: XOR<ModuleScalarRelationFilter, ModuleWhereInput>
+  }, "id">
+
+  export type SubmoduleOrderByWithAggregationInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrderInput | SortOrder
+    durationMinutes?: SortOrder
+    done?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+    _count?: SubmoduleCountOrderByAggregateInput
+    _avg?: SubmoduleAvgOrderByAggregateInput
+    _max?: SubmoduleMaxOrderByAggregateInput
+    _min?: SubmoduleMinOrderByAggregateInput
+    _sum?: SubmoduleSumOrderByAggregateInput
+  }
+
+  export type SubmoduleScalarWhereWithAggregatesInput = {
+    AND?: SubmoduleScalarWhereWithAggregatesInput | SubmoduleScalarWhereWithAggregatesInput[]
+    OR?: SubmoduleScalarWhereWithAggregatesInput[]
+    NOT?: SubmoduleScalarWhereWithAggregatesInput | SubmoduleScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Submodule"> | number
+    moduleId?: IntWithAggregatesFilter<"Submodule"> | number
+    name?: StringWithAggregatesFilter<"Submodule"> | string
+    link?: StringNullableWithAggregatesFilter<"Submodule"> | string | null
+    durationMinutes?: IntWithAggregatesFilter<"Submodule"> | number
+    done?: BoolWithAggregatesFilter<"Submodule"> | boolean
+    position?: IntWithAggregatesFilter<"Submodule"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Submodule"> | Date | string
   }
 
   export type CourseCreateInput = {
@@ -4964,6 +6353,7 @@ export namespace Prisma {
     position?: number
     createdAt?: Date | string
     mission: MissionCreateNestedOneWithoutModulesInput
+    submodules?: SubmoduleCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUncheckedCreateInput = {
@@ -4975,6 +6365,7 @@ export namespace Prisma {
     done?: boolean
     position?: number
     createdAt?: Date | string
+    submodules?: SubmoduleUncheckedCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUpdateInput = {
@@ -4985,6 +6376,7 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     mission?: MissionUpdateOneRequiredWithoutModulesNestedInput
+    submodules?: SubmoduleUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateInput = {
@@ -4996,6 +6388,7 @@ export namespace Prisma {
     done?: BoolFieldUpdateOperationsInput | boolean
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submodules?: SubmoduleUncheckedUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleCreateManyInput = {
@@ -5021,6 +6414,79 @@ export namespace Prisma {
   export type ModuleUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     missionId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleCreateInput = {
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+    module: ModuleCreateNestedOneWithoutSubmodulesInput
+  }
+
+  export type SubmoduleUncheckedCreateInput = {
+    id?: number
+    moduleId: number
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+  }
+
+  export type SubmoduleUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    module?: ModuleUpdateOneRequiredWithoutSubmodulesNestedInput
+  }
+
+  export type SubmoduleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    moduleId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleCreateManyInput = {
+    id?: number
+    moduleId: number
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+  }
+
+  export type SubmoduleUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    moduleId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null
     durationMinutes?: IntFieldUpdateOperationsInput | number
@@ -5236,9 +6702,19 @@ export namespace Prisma {
     isNot?: MissionWhereInput
   }
 
+  export type SubmoduleListRelationFilter = {
+    every?: SubmoduleWhereInput
+    some?: SubmoduleWhereInput
+    none?: SubmoduleWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type SubmoduleOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ModuleCountOrderByAggregateInput = {
@@ -5312,6 +6788,58 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type ModuleScalarRelationFilter = {
+    is?: ModuleWhereInput
+    isNot?: ModuleWhereInput
+  }
+
+  export type SubmoduleCountOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrder
+    durationMinutes?: SortOrder
+    done?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SubmoduleAvgOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    durationMinutes?: SortOrder
+    position?: SortOrder
+  }
+
+  export type SubmoduleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrder
+    durationMinutes?: SortOrder
+    done?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SubmoduleMinOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    name?: SortOrder
+    link?: SortOrder
+    durationMinutes?: SortOrder
+    done?: SortOrder
+    position?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SubmoduleSumOrderByAggregateInput = {
+    id?: SortOrder
+    moduleId?: SortOrder
+    durationMinutes?: SortOrder
+    position?: SortOrder
   }
 
   export type MissionCreateNestedManyWithoutCourseInput = {
@@ -5434,6 +6962,20 @@ export namespace Prisma {
     connect?: MissionWhereUniqueInput
   }
 
+  export type SubmoduleCreateNestedManyWithoutModuleInput = {
+    create?: XOR<SubmoduleCreateWithoutModuleInput, SubmoduleUncheckedCreateWithoutModuleInput> | SubmoduleCreateWithoutModuleInput[] | SubmoduleUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutModuleInput | SubmoduleCreateOrConnectWithoutModuleInput[]
+    createMany?: SubmoduleCreateManyModuleInputEnvelope
+    connect?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+  }
+
+  export type SubmoduleUncheckedCreateNestedManyWithoutModuleInput = {
+    create?: XOR<SubmoduleCreateWithoutModuleInput, SubmoduleUncheckedCreateWithoutModuleInput> | SubmoduleCreateWithoutModuleInput[] | SubmoduleUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutModuleInput | SubmoduleCreateOrConnectWithoutModuleInput[]
+    createMany?: SubmoduleCreateManyModuleInputEnvelope
+    connect?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
@@ -5448,6 +6990,48 @@ export namespace Prisma {
     upsert?: MissionUpsertWithoutModulesInput
     connect?: MissionWhereUniqueInput
     update?: XOR<XOR<MissionUpdateToOneWithWhereWithoutModulesInput, MissionUpdateWithoutModulesInput>, MissionUncheckedUpdateWithoutModulesInput>
+  }
+
+  export type SubmoduleUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<SubmoduleCreateWithoutModuleInput, SubmoduleUncheckedCreateWithoutModuleInput> | SubmoduleCreateWithoutModuleInput[] | SubmoduleUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutModuleInput | SubmoduleCreateOrConnectWithoutModuleInput[]
+    upsert?: SubmoduleUpsertWithWhereUniqueWithoutModuleInput | SubmoduleUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: SubmoduleCreateManyModuleInputEnvelope
+    set?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    disconnect?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    delete?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    connect?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    update?: SubmoduleUpdateWithWhereUniqueWithoutModuleInput | SubmoduleUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: SubmoduleUpdateManyWithWhereWithoutModuleInput | SubmoduleUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: SubmoduleScalarWhereInput | SubmoduleScalarWhereInput[]
+  }
+
+  export type SubmoduleUncheckedUpdateManyWithoutModuleNestedInput = {
+    create?: XOR<SubmoduleCreateWithoutModuleInput, SubmoduleUncheckedCreateWithoutModuleInput> | SubmoduleCreateWithoutModuleInput[] | SubmoduleUncheckedCreateWithoutModuleInput[]
+    connectOrCreate?: SubmoduleCreateOrConnectWithoutModuleInput | SubmoduleCreateOrConnectWithoutModuleInput[]
+    upsert?: SubmoduleUpsertWithWhereUniqueWithoutModuleInput | SubmoduleUpsertWithWhereUniqueWithoutModuleInput[]
+    createMany?: SubmoduleCreateManyModuleInputEnvelope
+    set?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    disconnect?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    delete?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    connect?: SubmoduleWhereUniqueInput | SubmoduleWhereUniqueInput[]
+    update?: SubmoduleUpdateWithWhereUniqueWithoutModuleInput | SubmoduleUpdateWithWhereUniqueWithoutModuleInput[]
+    updateMany?: SubmoduleUpdateManyWithWhereWithoutModuleInput | SubmoduleUpdateManyWithWhereWithoutModuleInput[]
+    deleteMany?: SubmoduleScalarWhereInput | SubmoduleScalarWhereInput[]
+  }
+
+  export type ModuleCreateNestedOneWithoutSubmodulesInput = {
+    create?: XOR<ModuleCreateWithoutSubmodulesInput, ModuleUncheckedCreateWithoutSubmodulesInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutSubmodulesInput
+    connect?: ModuleWhereUniqueInput
+  }
+
+  export type ModuleUpdateOneRequiredWithoutSubmodulesNestedInput = {
+    create?: XOR<ModuleCreateWithoutSubmodulesInput, ModuleUncheckedCreateWithoutSubmodulesInput>
+    connectOrCreate?: ModuleCreateOrConnectWithoutSubmodulesInput
+    upsert?: ModuleUpsertWithoutSubmodulesInput
+    connect?: ModuleWhereUniqueInput
+    update?: XOR<XOR<ModuleUpdateToOneWithWhereWithoutSubmodulesInput, ModuleUpdateWithoutSubmodulesInput>, ModuleUncheckedUpdateWithoutSubmodulesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5679,6 +7263,7 @@ export namespace Prisma {
     done?: boolean
     position?: number
     createdAt?: Date | string
+    submodules?: SubmoduleCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleUncheckedCreateWithoutMissionInput = {
@@ -5689,6 +7274,7 @@ export namespace Prisma {
     done?: boolean
     position?: number
     createdAt?: Date | string
+    submodules?: SubmoduleUncheckedCreateNestedManyWithoutModuleInput
   }
 
   export type ModuleCreateOrConnectWithoutMissionInput = {
@@ -5777,6 +7363,35 @@ export namespace Prisma {
     create: XOR<MissionCreateWithoutModulesInput, MissionUncheckedCreateWithoutModulesInput>
   }
 
+  export type SubmoduleCreateWithoutModuleInput = {
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+  }
+
+  export type SubmoduleUncheckedCreateWithoutModuleInput = {
+    id?: number
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+  }
+
+  export type SubmoduleCreateOrConnectWithoutModuleInput = {
+    where: SubmoduleWhereUniqueInput
+    create: XOR<SubmoduleCreateWithoutModuleInput, SubmoduleUncheckedCreateWithoutModuleInput>
+  }
+
+  export type SubmoduleCreateManyModuleInputEnvelope = {
+    data: SubmoduleCreateManyModuleInput | SubmoduleCreateManyModuleInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MissionUpsertWithoutModulesInput = {
     update: XOR<MissionUpdateWithoutModulesInput, MissionUncheckedUpdateWithoutModulesInput>
     create: XOR<MissionCreateWithoutModulesInput, MissionUncheckedCreateWithoutModulesInput>
@@ -5801,6 +7416,94 @@ export namespace Prisma {
     courseId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     timeMinutes?: IntFieldUpdateOperationsInput | number
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleUpsertWithWhereUniqueWithoutModuleInput = {
+    where: SubmoduleWhereUniqueInput
+    update: XOR<SubmoduleUpdateWithoutModuleInput, SubmoduleUncheckedUpdateWithoutModuleInput>
+    create: XOR<SubmoduleCreateWithoutModuleInput, SubmoduleUncheckedCreateWithoutModuleInput>
+  }
+
+  export type SubmoduleUpdateWithWhereUniqueWithoutModuleInput = {
+    where: SubmoduleWhereUniqueInput
+    data: XOR<SubmoduleUpdateWithoutModuleInput, SubmoduleUncheckedUpdateWithoutModuleInput>
+  }
+
+  export type SubmoduleUpdateManyWithWhereWithoutModuleInput = {
+    where: SubmoduleScalarWhereInput
+    data: XOR<SubmoduleUpdateManyMutationInput, SubmoduleUncheckedUpdateManyWithoutModuleInput>
+  }
+
+  export type SubmoduleScalarWhereInput = {
+    AND?: SubmoduleScalarWhereInput | SubmoduleScalarWhereInput[]
+    OR?: SubmoduleScalarWhereInput[]
+    NOT?: SubmoduleScalarWhereInput | SubmoduleScalarWhereInput[]
+    id?: IntFilter<"Submodule"> | number
+    moduleId?: IntFilter<"Submodule"> | number
+    name?: StringFilter<"Submodule"> | string
+    link?: StringNullableFilter<"Submodule"> | string | null
+    durationMinutes?: IntFilter<"Submodule"> | number
+    done?: BoolFilter<"Submodule"> | boolean
+    position?: IntFilter<"Submodule"> | number
+    createdAt?: DateTimeFilter<"Submodule"> | Date | string
+  }
+
+  export type ModuleCreateWithoutSubmodulesInput = {
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+    mission: MissionCreateNestedOneWithoutModulesInput
+  }
+
+  export type ModuleUncheckedCreateWithoutSubmodulesInput = {
+    id?: number
+    missionId: number
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+  }
+
+  export type ModuleCreateOrConnectWithoutSubmodulesInput = {
+    where: ModuleWhereUniqueInput
+    create: XOR<ModuleCreateWithoutSubmodulesInput, ModuleUncheckedCreateWithoutSubmodulesInput>
+  }
+
+  export type ModuleUpsertWithoutSubmodulesInput = {
+    update: XOR<ModuleUpdateWithoutSubmodulesInput, ModuleUncheckedUpdateWithoutSubmodulesInput>
+    create: XOR<ModuleCreateWithoutSubmodulesInput, ModuleUncheckedCreateWithoutSubmodulesInput>
+    where?: ModuleWhereInput
+  }
+
+  export type ModuleUpdateToOneWithWhereWithoutSubmodulesInput = {
+    where?: ModuleWhereInput
+    data: XOR<ModuleUpdateWithoutSubmodulesInput, ModuleUncheckedUpdateWithoutSubmodulesInput>
+  }
+
+  export type ModuleUpdateWithoutSubmodulesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mission?: MissionUpdateOneRequiredWithoutModulesNestedInput
+  }
+
+  export type ModuleUncheckedUpdateWithoutSubmodulesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    missionId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5855,6 +7558,7 @@ export namespace Prisma {
     done?: BoolFieldUpdateOperationsInput | boolean
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submodules?: SubmoduleUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateWithoutMissionInput = {
@@ -5865,9 +7569,49 @@ export namespace Prisma {
     done?: BoolFieldUpdateOperationsInput | boolean
     position?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submodules?: SubmoduleUncheckedUpdateManyWithoutModuleNestedInput
   }
 
   export type ModuleUncheckedUpdateManyWithoutMissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleCreateManyModuleInput = {
+    id?: number
+    name: string
+    link?: string | null
+    durationMinutes?: number
+    done?: boolean
+    position?: number
+    createdAt?: Date | string
+  }
+
+  export type SubmoduleUpdateWithoutModuleInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleUncheckedUpdateWithoutModuleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMinutes?: IntFieldUpdateOperationsInput | number
+    done?: BoolFieldUpdateOperationsInput | boolean
+    position?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmoduleUncheckedUpdateManyWithoutModuleInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     link?: NullableStringFieldUpdateOperationsInput | string | null

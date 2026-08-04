@@ -6,8 +6,11 @@ A modern, single-page web application for tracking learning progress across modu
 
 - **Single-Page Layout**: Stats displayed at the top, functionality below
 - **Overall Progress Tracking**: Visual progress bar and percentage completion
+- **Course Management**: Create, delete, and reset courses with nested missions
 - **Mission Management**: Create, organize, and manage learning missions
 - **Module Tracking**: Add modules to missions and mark them as complete
+- **Submodule Support**: Modules may optionally contain submodules; the parent module completes when all child submodules are done
+- **Time Tracking**: Module and mission time rollups use submodule durations when present, and fall back to the module's own duration otherwise
 - **Quick Stats Dashboard**: Visual cards showing completion metrics
 - **Real-time Updates**: Instant feedback on progress changes
 - **Dark Theme**: Eye-friendly dark UI optimized for long study sessions
@@ -16,6 +19,7 @@ A modern, single-page web application for tracking learning progress across modu
 ## 🏗️ Architecture
 
 ### Tech Stack
+
 - **Frontend**: React 19 (RC) with TypeScript
 - **Framework**: Next.js 15 (Latest)
 - **Database**: PostgreSQL with Prisma ORM
@@ -23,6 +27,7 @@ A modern, single-page web application for tracking learning progress across modu
 - **Styling**: CSS3 with CSS Variables
 
 ### Project Structure
+
 ```
 src/
 ├── app/
@@ -49,6 +54,7 @@ src/
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+ (Node 20 recommended)
 - npm or yarn
 - PostgreSQL database (or use Supabase)
@@ -56,29 +62,34 @@ src/
 ### Installation
 
 1. Clone the repository
+
 ```bash
 git clone <repo-url>
 cd batch5-tracker
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables
+
 ```bash
 cp .env.example .env.local
 # Edit .env.local with your database credentials
 ```
 
 4. Set up the database
+
 ```bash
 npx prisma db push
 npx prisma db seed
 ```
 
 5. Run the development server
+
 ```bash
 npm run dev
 ```
@@ -88,11 +99,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 📊 Page Layout
 
 ### Top Section - Stats Dashboard
+
 - Overall progress bar with percentage
 - Quick stat cards (Complete %, Done count, In Progress count, Mission count)
 - Sticky positioning for easy reference while scrolling
 
 ### Bottom Section - Functionality
+
 - Missions list with expansion/collapse
 - Module items with checkboxes
 - Add mission button
@@ -116,32 +129,46 @@ npm run db:seed      # Seed database with sample data
 ## 📝 Database Schema
 
 ### Mission
+
 - `id`: Unique identifier
 - `title`: Mission name
 - `modules`: Related modules
 - `createdAt`: Creation timestamp
 
 ### Module
+
 - `id`: Unique identifier
 - `name`: Module name
-- `done`: Completion status
+- `done`: Completion status derived from submodules when present
 - `missionId`: Parent mission reference
+- `durationMinutes`: Estimated duration in seconds, used for time rollups
 - `createdAt`: Creation timestamp
+
+### Submodule
+
+- `id`: Unique identifier
+- `moduleId`: Parent module reference
+- `name`: Submodule name
+- `done`: Completion status
+- `durationMinutes`: Estimated duration in seconds
 
 ## 🎨 Customization
 
 ### Colors
+
 Edit CSS variables in `src/app/globals.css`:
+
 ```css
 :root {
-  --accent: #22c57e;        /* Primary color */
-  --danger: #e05555;        /* Error/delete color */
-  --bg: #0f1117;            /* Background */
+  --accent: #22c57e; /* Primary color */
+  --danger: #e05555; /* Error/delete color */
+  --bg: #0f1117; /* Background */
   /* ... more variables */
 }
 ```
 
 ### Statistics
+
 The stats section is fully customizable. Modify the stat cards in `src/app/page.tsx` under the `stats-grid` section.
 
 ## 🔐 Environment Variables
@@ -158,11 +185,13 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
 ## 🐛 Troubleshooting
 
 ### Database Connection Issues
+
 - Verify DATABASE_URL is correct
 - Ensure PostgreSQL is running
 - Check firewall rules
 
 ### Build Errors
+
 - Clear `.next` folder: `rm -rf .next`
 - Reinstall dependencies: `rm -rf node_modules && npm install`
 - Rebuild: `npm run build`
@@ -192,5 +221,7 @@ MIT License - Feel free to use this project for your Batch 5 journey!
 **Version**: 2.0.0  
 **Last Updated**: May 2025  
 **Dependencies Updated**: Latest stable versions
+
 # b5-tracker
+
 # b5-tracker

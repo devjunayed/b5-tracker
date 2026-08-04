@@ -1,3 +1,14 @@
+export interface Submodule {
+  id: number;
+  moduleId: number;
+  name: string;
+  link: string | null;
+  durationMinutes: number;
+  done: boolean;
+  position: number;
+  createdAt: string;
+}
+
 export interface Module {
   id: number;
   missionId: number;
@@ -7,6 +18,7 @@ export interface Module {
   done: boolean;
   position: number;
   createdAt: string;
+  submodules: Submodule[];
 }
 
 export interface Mission {

@@ -6,9 +6,16 @@ import { parseTimeInput } from '@/lib/time';
 interface Props {
   onSubmit: (name: string, durationMinutes: number, link?: string) => Promise<void>;
   onCancel: () => void;
+  itemLabel?: string;
+  addButtonLabel?: string;
 }
 
-export function AddModuleForm({ onSubmit, onCancel }: Props) {
+export function AddModuleForm({
+  onSubmit,
+  onCancel,
+  itemLabel = 'Module',
+  addButtonLabel = 'Add',
+}: Props) {
   const [name, setName] = useState('');
   const [duration, setDuration] = useState('');
   const [link, setLink] = useState('');
@@ -46,7 +53,7 @@ export function AddModuleForm({ onSubmit, onCancel }: Props) {
         type="text"
         value={name}
         onChange={e => setName(e.target.value)}
-        placeholder="Module name..."
+        placeholder={`${itemLabel} name...`}
         className="add-input"
         disabled={loading}
         onKeyDown={e => {
@@ -79,7 +86,7 @@ export function AddModuleForm({ onSubmit, onCancel }: Props) {
         }}
       />
       <button className="btn-primary" onClick={handleSubmit} disabled={loading || !name.trim()}>
-        {loading ? '...' : 'Add'}
+        {loading ? '...' : addButtonLabel}
       </button>
       <button className="btn-ghost" onClick={onCancel} disabled={loading}>
         Cancel

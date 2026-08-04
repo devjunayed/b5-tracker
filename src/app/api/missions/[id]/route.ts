@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   const kind = req.nextUrl.searchParams.get("kind");
@@ -25,7 +25,7 @@ export async function DELETE(
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   const body = await req.json();
@@ -52,7 +52,14 @@ export async function PATCH(
         missions: {
           orderBy: [{ position: "asc" }, { id: "asc" }],
           include: {
-            modules: { orderBy: [{ position: "asc" }, { id: "asc" }] },
+            modules: {
+              orderBy: [{ position: "asc" }, { id: "asc" }],
+              include: {
+                submodules: {
+                  orderBy: [{ position: "asc" }, { id: "asc" }],
+                },
+              },
+            },
           },
         },
       },
@@ -67,14 +74,21 @@ export async function PATCH(
   if (!Number.isInteger(parsedTime) || parsedTime < 0) {
     return NextResponse.json(
       { error: "Time must be a non-negative number of minutes" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   const mission = await prisma.mission.update({
     where: { id: Number(id) },
     data: { timeMinutes: parsedTime },
-    include: { modules: { orderBy: [{ position: "asc" }, { id: "asc" }] } },
+    include: {
+      modules: {
+        orderBy: [{ position: "asc" }, { id: "asc" }],
+        include: {
+          submodules: { orderBy: [{ position: "asc" }, { id: "asc" }] },
+        },
+      },
+    },
   });
 
   return NextResponse.json(mission);
@@ -82,7 +96,7 @@ export async function PATCH(
 
 export async function POST(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
   const missionId = Number(id);
@@ -92,16 +106,13 @@ export async function POST(
   const trimmedLink = typeof link === "string" ? link.trim() : "";
 
   if (!name?.trim()) {
-    return NextResponse.json(
-      { error: "Name is required" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Name is required" }, { status: 400 });
   }
 
   if (!Number.isInteger(parsedDuration) || parsedDuration < 0) {
     return NextResponse.json(
       { error: "Duration must be a non-negative number of minutes" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -117,6 +128,7 @@ export async function POST(
       missionId,
       position: count,
     },
+    include: { submodules: true },
   });
 
   return NextResponse.json(module, { status: 201 });

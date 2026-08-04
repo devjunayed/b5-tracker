@@ -147,6 +147,17 @@ exports.Prisma.ModuleScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.SubmoduleScalarFieldEnum = {
+  id: 'id',
+  moduleId: 'moduleId',
+  name: 'name',
+  link: 'link',
+  durationMinutes: 'durationMinutes',
+  done: 'done',
+  position: 'position',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -166,7 +177,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Course: 'Course',
   Mission: 'Mission',
-  Module: 'Module'
+  Module: 'Module',
+  Submodule: 'Submodule'
 };
 
 /**
