@@ -52,31 +52,51 @@ export function ModuleItem({
   const submodulePct = submoduleTotal
     ? Math.round((completedSubmodules / submoduleTotal) * 100)
     : 0;
-
+  const [open, setOpen] = useState(false);
+  // const complete = stats.done === stats.total && stats.total > 0;
+  const complete = 0;
   return (
     <div
       className="module-row"
+      onClick={() => setOpen((o) => !o)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <div className="module-main">
         <label className="module-label">
-          <input
-            type="checkbox"
-            checked={displayState.done}
-            onChange={() => {
-              if (mod.submodules.length === 0) {
-                onToggle(missionId, mod.id);
-              }
-            }}
-            className="checkbox"
-            aria-disabled={mod.submodules.length > 0}
-          />
+          {submoduleTotal == 0 && (
+            <input
+              type="checkbox"
+              checked={displayState.done}
+              onChange={() => {
+                if (mod.submodules.length === 0) {
+                  onToggle(missionId, mod.id);
+                }
+              }}
+              className="checkbox"
+              aria-disabled={mod.submodules.length > 0}
+            />
+          )}
+
+          {submoduleTotal > 0 && (
+            <span
+              className="chevron"
+              style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
+            >
+              &rsaquo;
+            </span>
+          )}
+
           <span
             className={displayState.done ? "module-name done" : "module-name"}
           >
             {mod.name}
           </span>
+          {/* <span
+            className={displayState.done ? "module-name done" : "module-name"}
+          >
+            {mod.name}
+          </span> */}
         </label>
 
         {mod.link && (
@@ -116,7 +136,7 @@ export function ModuleItem({
         </button>
       </div>
 
-      {mod.submodules.length > 0 && (
+      {mod.submodules.length > 0 && open && (
         <div className="submodule-list">
           {mod.submodules.map((submodule) => (
             <div key={submodule.id} className="submodule-row">
@@ -193,12 +213,14 @@ export function ModuleItem({
           />
         </div>
       ) : (
-        <button
-          className="add-module-btn submodule-add-btn"
-          onClick={() => setAddingSubmodule(true)}
-        >
-          + Add submodule
-        </button>
+        open && (
+          <button
+            className="add-module-btn submodule-add-btn"
+            onClick={() => setAddingSubmodule(true)}
+          >
+            + Add submodule
+          </button>
+        )
       )}
     </div>
   );

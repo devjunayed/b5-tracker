@@ -78,3 +78,9 @@ Creating turbopack project { dir: 'D:\\Projects\\tracker', testMode: true }
  GET / 200 in 531ms (next.js: 167ms, application-code: 364ms)
  GET / 200 in 113ms (next.js: 45ms, application-code: 68ms)
  GET /api/missions 200 in 1065ms (next.js: 14ms, application-code: 1051ms)
+✓ Compiled in 1218ms
+ GET / 200 in 578ms (next.js: 362ms, application-code: 216ms)
+ GET / 200 in 850ms (next.js: 361ms, application-code: 488ms)
+ GET /api/missions 200 in 4.7s (next.js: 415ms, application-code: 4.3s)
+✓ Compiled in 62ms
+✓ Compiled in 78ms
