@@ -60,6 +60,7 @@ export function MissionCard({
     0,
   );
 
+  const [hideCompleted, setHideCompleted] = useState(true);
   return (
     <div className={`mission-card ${complete ? "complete" : ""}`}>
       <div
@@ -107,18 +108,52 @@ export function MissionCard({
           {mission.modules.length === 0 && (
             <p className="empty-hint">No modules yet - add one below.</p>
           )}
-          {mission.modules.map((mod) => (
-            <ModuleItem
-              key={mod.id}
-              mod={mod}
-              missionId={mission.id}
-              onAddSubmodule={onAddSubmodule}
-              onToggle={onToggleModule}
-              onToggleSubmodule={onToggleSubmodule}
-              onDelete={onDeleteModule}
-              onDeleteSubmodule={onDeleteSubmodule}
-            />
-          ))}
+          <div className="border-b text-xs border-gray-700 text-right flex justify-between px-4 py-1">
+            <p className=" text-(--muted)">
+              {hideCompleted ? stats.done : 0} Hidden
+            </p>
+            <button
+              onClick={() =>
+                setHideCompleted((hideCompleted) => !hideCompleted)
+              }
+              className="text-(--muted) cursor-pointer"
+            >
+              {hideCompleted ? "Show completed" : "Hide completed"}
+            </button>
+          </div>
+
+          {hideCompleted &&
+            mission.modules
+              .filter((mod) => !mod.done)
+              .map((mod) => {
+                return (
+                  <ModuleItem
+                    key={mod.id}
+                    mod={mod}
+                    missionId={mission.id}
+                    onAddSubmodule={onAddSubmodule}
+                    onToggle={onToggleModule}
+                    onToggleSubmodule={onToggleSubmodule}
+                    onDelete={onDeleteModule}
+                    onDeleteSubmodule={onDeleteSubmodule}
+                  />
+                );
+              })}
+          {!hideCompleted &&
+            mission.modules.map((mod) => {
+              return (
+                <ModuleItem
+                  key={mod.id}
+                  mod={mod}
+                  missionId={mission.id}
+                  onAddSubmodule={onAddSubmodule}
+                  onToggle={onToggleModule}
+                  onToggleSubmodule={onToggleSubmodule}
+                  onDelete={onDeleteModule}
+                  onDeleteSubmodule={onDeleteSubmodule}
+                />
+              );
+            })}
 
           {adding ? (
             <div className="add-module-form-wrap">
