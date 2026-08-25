@@ -53,6 +53,7 @@ export function ModuleItem({
     ? Math.round((completedSubmodules / submoduleTotal) * 100)
     : 0;
   const [open, setOpen] = useState(false);
+  const [hideCompleted, setHideCompleted] = useState(true);
   // const complete = stats.done === stats.total && stats.total > 0;
   const complete = 0;
   return (
@@ -98,8 +99,6 @@ export function ModuleItem({
               {mod.name}
             </span>
           )}
-
-     
         </label>
 
         {mod.link && (
@@ -141,60 +140,134 @@ export function ModuleItem({
 
       {mod.submodules.length > 0 && open && (
         <div className="submodule-list">
-          {mod.submodules.map((submodule) => (
-            <div key={submodule.id} className="submodule-row">
-              <label className="submodule-label">
-                <input
-                  type="checkbox"
-                  checked={submodule.done}
-                  onChange={() =>
-                    onToggleSubmodule(missionId, mod.id, submodule.id)
-                  }
-                  className="checkbox"
-                />
-                <span
-                  className={
-                    submodule.done ? "module-name done" : "module-name"
-                  }
-                >
-                  {submodule.name}
-                </span>
-              </label>
-
-              {submodule.link && (
-                <a
-                  className="module-link"
-                  href={submodule.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Open
-                </a>
-              )}
-
-              {submodule.durationMinutes > 0 && (
-                <span className="module-duration">
-                  {formatTime(submodule.durationMinutes)}
-                </span>
-              )}
-
+          {mod.submodules.length !== 0 && (
+            <div className="border  text-xs border-gray-700 text-right flex justify-between px-4 py-1">
+              <p className=" text-(--muted)">
+                {hideCompleted ? completedSubmodules : 0} Hidden
+              </p>
               <button
-                className="delete-btn submodule-delete-btn"
                 onClick={() =>
-                  onDeleteSubmodule(
-                    missionId,
-                    mod.id,
-                    submodule.id,
-                    submodule.name,
-                  )
+                  setHideCompleted((hideCompleted) => !hideCompleted)
                 }
-                aria-label={`Delete ${submodule.name}`}
+                className="text-(--muted) cursor-pointer"
               >
-                x
+                {hideCompleted ? "Show completed" : "Hide completed"}
               </button>
             </div>
-          ))}
+          )}
+
+          {!hideCompleted &&
+            mod.submodules.map((submodule) => (
+              <div key={submodule.id} className="submodule-row">
+                <label className="submodule-label">
+                  <input
+                    type="checkbox"
+                    checked={submodule.done}
+                    onChange={() =>
+                      onToggleSubmodule(missionId, mod.id, submodule.id)
+                    }
+                    className="checkbox"
+                  />
+                  <span
+                    className={
+                      submodule.done ? "module-name done" : "module-name"
+                    }
+                  >
+                    {submodule.name}
+                  </span>
+                </label>
+
+                {submodule.link && (
+                  <a
+                    className="module-link"
+                    href={submodule.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Open
+                  </a>
+                )}
+
+                {submodule.durationMinutes > 0 && (
+                  <span className="module-duration">
+                    {formatTime(submodule.durationMinutes)}
+                  </span>
+                )}
+
+                <button
+                  className="delete-btn submodule-delete-btn"
+                  onClick={() =>
+                    onDeleteSubmodule(
+                      missionId,
+                      mod.id,
+                      submodule.id,
+                      submodule.name,
+                    )
+                  }
+                  aria-label={`Delete ${submodule.name}`}
+                >
+                  x
+                </button>
+              </div>
+            ))}
+          {hideCompleted &&
+            mod.submodules
+              .filter((submodule) => !submodule.done)
+              .map((submodule) => (
+                <div key={submodule.id} className="submodule-row">
+                  <label className="submodule-label">
+                    <input
+                      type="checkbox"
+                      checked={submodule.done}
+                      onChange={() =>
+                        onToggleSubmodule(missionId, mod.id, submodule.id)
+                      }
+                      className="checkbox"
+                    />
+                    <span
+                      className={
+                        submodule.done ? "module-name done" : "module-name"
+                      }
+                    >
+                      {submodule.name}
+                    </span>
+                  </label>
+
+                  {submodule.link && (
+                    <a
+                      className="module-link"
+                      href={submodule.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Open
+                    </a>
+                  )}
+
+                  {submodule.durationMinutes > 0 && (
+                    <span className="module-duration">
+                      {formatTime(submodule.durationMinutes)}
+                    </span>
+                  )}
+
+                  <button
+                    className="delete-btn submodule-delete-btn"
+                    onClick={() =>
+                      onDeleteSubmodule(
+                        missionId,
+                        mod.id,
+                        submodule.id,
+                        submodule.name,
+                      )
+                    }
+                    aria-label={`Delete ${submodule.name}`}
+                  >
+                    x
+                  </button>
+                </div>
+              ))}
         </div>
       )}
 

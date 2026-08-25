@@ -61,6 +61,7 @@ export function MissionCard({
   );
 
   const [hideCompleted, setHideCompleted] = useState(true);
+  const hasSubModule = mission.modules.some((module) => module.submodules.length > 0) || false;
   return (
     <div className={`mission-card ${complete ? "complete" : ""}`}>
       <div
@@ -111,6 +112,7 @@ export function MissionCard({
 
           {
             mission.modules.length !== 0 && 
+            !hasSubModule && 
           <div className="border-b text-xs border-gray-700 text-right flex justify-between px-4 py-1">
             <p className=" text-(--muted)">
               {hideCompleted ? stats.done : 0} Hidden
