@@ -108,6 +108,9 @@ export function MissionCard({
           {mission.modules.length === 0 && (
             <p className="empty-hint">No modules yet - add one below.</p>
           )}
+
+          {
+            mission.modules.length !== 0 && 
           <div className="border-b text-xs border-gray-700 text-right flex justify-between px-4 py-1">
             <p className=" text-(--muted)">
               {hideCompleted ? stats.done : 0} Hidden
@@ -121,8 +124,10 @@ export function MissionCard({
               {hideCompleted ? "Show completed" : "Hide completed"}
             </button>
           </div>
+          }
 
           {hideCompleted &&
+          
             mission.modules
               .filter((mod) => !mod.done)
               .map((mod) => {
