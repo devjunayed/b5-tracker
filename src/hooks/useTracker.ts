@@ -427,6 +427,7 @@ export function useTracker() {
     getCourseStats,
     getCourseTimeStats,
     getMissionStats,
+    getModuleFinishedMinutes,
     getModuleTime,
     isCourseFinished,
     addCourse,

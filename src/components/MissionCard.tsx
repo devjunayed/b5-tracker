@@ -59,6 +59,16 @@ export function MissionCard({
     (acc, mod) => acc + getModuleDisplayState(mod).durationMinutes,
     0,
   );
+  const completedTime = mission.modules.reduce(
+    (acc, mod) => {
+      const state = getModuleDisplayState(mod);
+
+      return acc + (state.done ? state.durationMinutes : 0);
+    },
+    0,
+  );
+
+  const remTime = missionTime - completedTime;
 
   const [hideCompleted, setHideCompleted] = useState(true);
   const hasSubModule = mission.modules.some((module) => module.submodules.length > 0) || false;
@@ -83,7 +93,8 @@ export function MissionCard({
         </div>
 
         <div className="mission-header-right">
-          <span className="time-pill">{formatTime(missionTime)}</span>
+          
+          <span className="time-pill"> {remTime ? formatTime(remTime): "0s"}</span>
           <div className="mini-progress">
             <ProgressBar pct={stats.pct} size="sm" />
           </div>
