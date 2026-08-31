@@ -140,9 +140,43 @@ export function MissionCard({
           }
 
           {hideCompleted &&
-          
+            !hasSubModule &&
             mission.modules
               .filter((mod) => !mod.done)
+              .map((mod) => {
+                return (
+                  <ModuleItem
+                    key={mod.id}
+                    mod={mod}
+                    missionId={mission.id}
+                    onAddSubmodule={onAddSubmodule}
+                    onToggle={onToggleModule}
+                    onToggleSubmodule={onToggleSubmodule}
+                    onDelete={onDeleteModule}
+                    onDeleteSubmodule={onDeleteSubmodule}
+                  />
+                );
+              })}
+          {!hideCompleted &&
+            mission.modules.map((mod) => {
+              return (
+                <ModuleItem
+                  key={mod.id}
+                  mod={mod}
+                  missionId={mission.id}
+                  onAddSubmodule={onAddSubmodule}
+                  onToggle={onToggleModule}
+                  onToggleSubmodule={onToggleSubmodule}
+                  onDelete={onDeleteModule}
+                  onDeleteSubmodule={onDeleteSubmodule}
+                />
+              );
+            })}
+
+      
+          {hideCompleted &&
+            hasSubModule &&
+            mission.modules
               .map((mod) => {
                 return (
                   <ModuleItem
