@@ -32,6 +32,11 @@ export async function PATCH(
 
   if (body.kind === "reset-course") {
     const courseId = Number(id);
+
+    if (!Number.isInteger(courseId)) {
+      return NextResponse.json({ error: "Invalid course id" }, { status: 400 });
+    }
+
     const course = await prisma.course.findUnique({
       where: { id: courseId },
       select: { id: true },
@@ -41,10 +46,16 @@ export async function PATCH(
       return NextResponse.json({ error: "Course not found" }, { status: 404 });
     }
 
-    await prisma.module.updateMany({
-      where: { mission: { courseId } },
-      data: { done: false },
-    });
+    await prisma.$transaction([
+      prisma.module.updateMany({
+        where: { mission: { courseId } },
+        data: { done: false },
+      }),
+      prisma.submodule.updateMany({
+        where: { module: { mission: { courseId } } },
+        data: { done: false },
+      }),
+    ]);
 
     const updated = await prisma.course.findUniqueOrThrow({
       where: { id: courseId },
