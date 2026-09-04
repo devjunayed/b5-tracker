@@ -43,12 +43,26 @@ export function ModuleItem({
 }: Props) {
   const [hovered, setHovered] = useState(false);
   const [addingSubmodule, setAddingSubmodule] = useState(false);
+
   const displayState = getModuleDisplayState(mod);
   const durationLabel = formatTime(displayState.durationMinutes);
+
+  const completedMinutes = mod.submodules.reduce(
+    (sum, submodule) =>
+      submodule.done ? sum + submodule.durationMinutes : sum,
+    0,
+  );
+  const submoduleDuration = mod.submodules.reduce(
+    (sum, submodule) => sum + submodule.durationMinutes,
+    0,
+  );
+  const remainingSubModuleTime = formatTime(submoduleDuration - completedMinutes);
+
   const submoduleTotal = mod.submodules.length;
   const completedSubmodules = mod.submodules.filter(
     (submodule) => submodule.done,
   ).length;
+
   const submodulePct = submoduleTotal
     ? Math.round((completedSubmodules / submoduleTotal) * 100)
     : 0;
@@ -113,8 +127,11 @@ export function ModuleItem({
           </a>
         )}
 
-        {durationLabel ? (
+        {submoduleTotal == 0 && durationLabel ? (
           <span className="module-duration">{durationLabel}</span>
+        ) : null}
+        {submoduleTotal > 0 && remainingSubModuleTime ? (
+          <span className="module-duration">{remainingSubModuleTime}</span>
         ) : null}
 
         {submoduleTotal > 0 && (

@@ -59,19 +59,30 @@ export function MissionCard({
     (acc, mod) => acc + getModuleDisplayState(mod).durationMinutes,
     0,
   );
-  const completedTime = mission.modules.reduce(
-    (acc, mod) => {
-      const state = getModuleDisplayState(mod);
+  const completedTime = mission.modules.reduce((acc, mod) => {
+    const state = getModuleDisplayState(mod);
 
-      return acc + (state.done ? state.durationMinutes : 0);
-    },
-    0,
-  );
+    return acc + (state.done ? state.durationMinutes : 0);
+  }, 0);
+
+  const sumbmodulesCompletedTimes = mission.modules.reduce((acc, mod) => {
+    const completedMinutes = mod.submodules.reduce(
+      (sum, submodule) =>
+        submodule.done ? sum + submodule.durationMinutes : sum,
+      0,
+    );
+    return acc + completedMinutes;
+  }, 0);
+  
+  const [hideCompleted, setHideCompleted] = useState(true);
+  const hasSubModule =
+  mission.modules.some((module) => module.submodules.length > 0) || false;
+
+
 
   const remTime = missionTime - completedTime;
 
-  const [hideCompleted, setHideCompleted] = useState(true);
-  const hasSubModule = mission.modules.some((module) => module.submodules.length > 0) || false;
+  const subModuleRemmainingTime = missionTime - sumbmodulesCompletedTimes;
   return (
     <div className={`mission-card ${complete ? "complete" : ""}`}>
       <div
@@ -93,8 +104,18 @@ export function MissionCard({
         </div>
 
         <div className="mission-header-right">
-          
-          <span className="time-pill"> {remTime ? formatTime(remTime): "0s"}</span>
+          {!hasSubModule && (
+            <span className="time-pill">
+              {" "}
+              {remTime ? formatTime(remTime) : "0s"}
+            </span>
+          )}
+          {hasSubModule && (
+            <span className="time-pill">
+              {" "}
+              {subModuleRemmainingTime ? formatTime(subModuleRemmainingTime) : "0s"}
+            </span>
+          )}
           <div className="mini-progress">
             <ProgressBar pct={stats.pct} size="sm" />
           </div>
@@ -121,23 +142,21 @@ export function MissionCard({
             <p className="empty-hint">No modules yet - add one below.</p>
           )}
 
-          {
-            mission.modules.length !== 0 && 
-            !hasSubModule && 
-          <div className="border-b text-xs border-gray-700 text-right flex justify-between px-4 py-1">
-            <p className=" text-(--muted)">
-              {hideCompleted ? stats.done : 0} Hidden
-            </p>
-            <button
-              onClick={() =>
-                setHideCompleted((hideCompleted) => !hideCompleted)
-              }
-              className="text-(--muted) cursor-pointer"
-            >
-              {hideCompleted ? "Show completed" : "Hide completed"}
-            </button>
-          </div>
-          }
+          {mission.modules.length !== 0 && !hasSubModule && (
+            <div className="border-b text-xs border-gray-700 text-right flex justify-between px-4 py-1">
+              <p className=" text-(--muted)">
+                {hideCompleted ? stats.done : 0} Hidden
+              </p>
+              <button
+                onClick={() =>
+                  setHideCompleted((hideCompleted) => !hideCompleted)
+                }
+                className="text-(--muted) cursor-pointer"
+              >
+                {hideCompleted ? "Show completed" : "Hide completed"}
+              </button>
+            </div>
+          )}
 
           {hideCompleted &&
             !hasSubModule &&
@@ -173,24 +192,22 @@ export function MissionCard({
               );
             })}
 
-      
           {hideCompleted &&
             hasSubModule &&
-            mission.modules
-              .map((mod) => {
-                return (
-                  <ModuleItem
-                    key={mod.id}
-                    mod={mod}
-                    missionId={mission.id}
-                    onAddSubmodule={onAddSubmodule}
-                    onToggle={onToggleModule}
-                    onToggleSubmodule={onToggleSubmodule}
-                    onDelete={onDeleteModule}
-                    onDeleteSubmodule={onDeleteSubmodule}
-                  />
-                );
-              })}
+            mission.modules.map((mod) => {
+              return (
+                <ModuleItem
+                  key={mod.id}
+                  mod={mod}
+                  missionId={mission.id}
+                  onAddSubmodule={onAddSubmodule}
+                  onToggle={onToggleModule}
+                  onToggleSubmodule={onToggleSubmodule}
+                  onDelete={onDeleteModule}
+                  onDeleteSubmodule={onDeleteSubmodule}
+                />
+              );
+            })}
           {!hideCompleted &&
             mission.modules.map((mod) => {
               return (
